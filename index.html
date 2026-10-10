@@ -19,6 +19,7 @@
 <style>
 :root{--ink:#1f1b16;--paper:#f7f3ec;--card:#fffdf9;--line:#e6ddcf;--gold:#b08d57;--gold2:#8a6a3c;--muted:#7a7064;--ok:#3d7a5a;--err:#b44a3a;--r:18px}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;word-break:keep-all}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -141,6 +142,7 @@ footer.app{text-align:center;color:var(--muted);font-size:12px;padding:20px;line
     <div class="brand" onclick="go('upload')"><svg viewBox="0 0 64 64" fill="none"><path d="M14 22 24 10h16l10 12-18 32z" fill="#c9a46a"/><path d="M14 22h36L32 54z" fill="#a07a42"/><path d="M24 10l-4 12h24l-4-12" fill="#e2c48e"/><path d="M20 22l12 32 12-32" stroke="#fff" stroke-opacity=".5"/></svg><div><span class="t">젬샷 스튜디오</span><small>GEMSHOT</small></div></div>
     <div class="spacer"></div>
     <button class="btn ghost sm" onclick="newProduct()">+ 새 상품</button>
+    <a class="badge" id="siteBadge" target="_blank" rel="noopener" hidden style="text-decoration:none;background:#1f1b16;color:#fff;border-color:#1f1b16">내 판매 사이트 ↗</a>
     <button class="badge" id="connBadge" onclick="openAuth()">AI 연결 필요</button>
   </div>
   <nav class="steps" id="steps">
@@ -159,14 +161,14 @@ footer.app{text-align:center;color:var(--muted);font-size:12px;padding:20px;line
     <div>
       <div class="eyebrow">One photo · Ready to sell</div>
       <h1>사진 한 장이<br>판매 페이지가 되는 순간</h1>
-      <p class="lead">팔찌·목걸이·반지 사진 한 장만 올리세요. AI가 상품명, 제품 설명, 품질·스펙, 상품정보제공고시, 판매 이미지 7종, 860px 상세페이지, 주문이 가능한 판매 사이트까지 한 번에 만들어 드립니다.</p>
+      <p class="lead">팔찌·목걸이·반지 사진 한 장만 올리세요. AI가 상품명, 제품 설명, 품질·스펙, 상품정보제공고시, 판매 이미지 7종, 860px 상세페이지, 주문·결제 페이지가 있는 판매 사이트까지 만들고 <b>자동으로 업로드</b>해 바로 판매할 수 있어요.</p>
       <div class="feat">
         <div><b>상품명·카피</b>후보 5개 + 스마트스토어/쿠팡 제목</div>
         <div><b>품질·스펙</b>소재·사이즈·관리법·고시 정보</div>
         <div><b>판매 이미지 7종</b>흰배경·연출·착용·디테일·선물</div>
         <div><b>상세페이지</b>JPG 통이미지·분할·HTML</div>
         <div><b>썸네일·SNS</b>1000px 썸네일, 인스타 카드</div>
-        <div><b>판매 사이트</b>주문서·계좌 안내 포함</div>
+        <div><b>판매 사이트 자동 업로드</b>주문·결제 페이지까지 바로 공개</div>
       </div>
       <div class="card">
         <h3>상품 기본 정보 <span class="cost">(아는 것만 입력, 비워도 됩니다)</span></h3>
@@ -197,11 +199,13 @@ footer.app{text-align:center;color:var(--muted);font-size:12px;padding:20px;line
           <button class="btn gold lg" id="runAll" disabled>✦ AI로 전부 만들기</button>
           <button class="btn ghost" id="manualBtn" disabled>AI 없이 직접 작성하기 (원본 사진만 사용)</button>
           <div class="cost" id="costInfo"></div>
+          <div class="cost" id="pubHint"></div>
         </div>
         <div class="progress" id="progress">
           <div class="pstep" data-s="analyze"><i></i><span>사진 분석 · 상품명/설명/품질 정보 작성</span></div>
           <div class="pstep" data-s="images"><i></i><span>판매 이미지 생성 <em id="imgCount"></em></span></div>
           <div class="pstep" data-s="detail"><i></i><span>상세페이지 조립</span></div>
+          <div class="pstep" data-s="publish"><i></i><span>판매 사이트 자동 업로드 <em id="pubInfo"></em></span></div>
         </div>
       </div>
     </div>
@@ -235,7 +239,7 @@ footer.app{text-align:center;color:var(--muted);font-size:12px;padding:20px;line
     <button class="btn ghost" id="exSns">인스타그램 카드<small>1080×1350 홍보 이미지</small></button>
     <button class="btn ghost" id="exTxt">상품 텍스트 (TXT)<small>상품명·태그·설명·캡션 모음</small></button>
     <button class="btn ghost" id="exHtml">상세페이지 HTML (ZIP)<small>자사몰·카페24 HTML 편집기용</small></button>
-    <button class="btn ghost" id="toShop">내 판매 사이트에 등록 →<small>주문 가능한 쇼핑 페이지</small></button>
+    <button class="btn ghost" id="toShop">판매 사이트에 바로 올리기 ↑<small>자동 공개 · 주문/결제 페이지 포함</small></button>
   </div>
   <div class="pvwrap" id="pvwrap"><div class="pvbox" id="pvbox"><iframe id="dpFrame" title="상세페이지 미리보기"></iframe></div></div>
 </section>
@@ -244,6 +248,7 @@ footer.app{text-align:center;color:var(--muted);font-size:12px;padding:20px;line
 <section class="panel" id="p-shop">
   <div class="split">
     <div>
+      <div class="card" id="pubCard" style="margin-bottom:14px"></div>
       <div class="card">
         <h3>상점 정보</h3>
         <p class="hint">판매 사이트와 상세페이지의 배송·교환 안내, 하단 사업자 정보에 들어갑니다. 이 기기에 저장돼요.</p>
@@ -261,7 +266,7 @@ footer.app{text-align:center;color:var(--muted);font-size:12px;padding:20px;line
           <div class="row"><button class="btn ghost sm" id="shopRefresh">새로고침</button><button class="btn gold sm" id="shopZip">판매 사이트 ZIP 받기</button></div></div>
         <iframe class="shopframe" id="shopFrame" title="판매 사이트 미리보기"></iframe>
         <div class="guide" style="margin-top:14px">
-          <b>판매 사이트 무료로 공개하기 (5분)</b>
+          <b>직접 파일로 올리고 싶다면 (선택)</b>
           <ol>
             <li>‘판매 사이트 ZIP 받기’ → 압축을 풉니다.</li>
             <li><a href="https://app.netlify.com/drop" target="_blank" rel="noopener">Netlify Drop</a>에 풀린 폴더를 통째로 끌어다 놓으면 바로 주소가 생깁니다. (GitHub Pages도 가능)</li>
@@ -505,12 +510,12 @@ async function genMany(keys,onDone){let i=0,done=0,fatal=null;const worker=async
 
 /* ───────── 전체 실행 ───────── */
 function pstep(s,state){const el=$(`.pstep[data-s="${s}"]`);el.className='pstep '+(state||'');el.querySelector('i').textContent=state==='done'?'✓':state==='err'?'!':''}
-$('#runAll').onclick=async()=>{if(!P||!blobs.original)return;if(needAuth())return;readInputs();running=true;updateButtons();$('#progress').classList.add('show');['analyze','images','detail'].forEach(s=>pstep(s,''));
+$('#runAll').onclick=async()=>{if(!P||!blobs.original)return;if(needAuth())return;readInputs();running=true;updateButtons();$('#progress').classList.add('show');['analyze','images','detail','publish'].forEach(s=>pstep(s,''));$('.pstep[data-s="publish"]').hidden=!(nlReady()&&nlCfg().auto!==false);
  try{pstep('analyze','run');const a=await analyze();P.autoName=true;applyAI(a);await save();pstep('analyze','done');
   pstep('images','run');const keys=SHOTS.map(s=>s.key);$('#imgCount').textContent='(0/'+keys.length+')';
   try{await genMany(keys,(d,n)=>$('#imgCount').textContent='('+d+'/'+n+')')}catch(e){pstep('images','err');toast(safeErr(e),5000)}
   const fails=SHOTS.filter(s=>shotState[s.key]?.st==='error').length;if(!$('.pstep[data-s="images"]').classList.contains('err'))pstep('images',fails?'err':'done');if(fails)$('#imgCount').textContent+=` · ${fails}장 실패(03 단계에서 다시 만들기)`;
-  pstep('detail','run');await save();pstep('detail','done');toast('완성! 상세페이지를 확인하세요.');go('detail')}
+  pstep('detail','run');await save();pstep('detail','done');if(nlReady()&&nlCfg().auto!==false){pstep('publish','run');const pr=await publishNow(true);pstep('publish',pr?'done':'err');if(pr)toast('완성! 판매 사이트에 자동으로 올라갔어요.',4500)}else toast('완성! 상세페이지를 확인하세요.');go('detail')}
  catch(e){pstep('analyze','err');toast(safeErr(e),6000)}finally{running=false;updateButtons()}};
 $('#manualBtn').onclick=async()=>{if(!P)return;readInputs();const cat=P.input.cat!=='auto'?P.input.cat:'other';P.category=cat;if(!P.ai)P.ai=manualAI(cat);if(!P.name){P.name=P.ai.names[0].ko;P.nameEn=P.ai.names[0].en}P.theme=TONES[P.input.tone||'luxury'].theme;await save();toast('기본 틀을 만들었어요. 내용을 수정해 주세요.');go('info')};
 $('#reAnalyze').onclick=async()=>{if(!P||!blobs.original){toast('먼저 사진을 올려주세요.');return}if(needAuth())return;if(P.ai&&!confirm('AI가 글을 새로 작성합니다. 직접 고친 내용은 사라져요. 계속할까요?'))return;busy(true,'AI가 사진을 분석해 글을 쓰는 중… (30초~1분)');try{readInputs();P.autoName=true;applyAI(await analyze());await save();renderEditor();toast('새로 작성했어요.')}catch(e){toast(safeErr(e),5000)}finally{busy(false)}};
@@ -702,7 +707,7 @@ $('#exAll').onclick=async()=>{if(!guard()||!ensureClean()||!checkVerify())return
  (await thumbs()).forEach(f=>files.push({name:'03_썸네일_1000/'+f.name,data:f.data}));files.push({name:'04_SNS/인스타카드_1080x1350.jpg',data:await snsCard()});files.push({name:'05_텍스트/상품텍스트.txt',data:'\ufeff'+textPack()});
  busy(true,'판매 패키지 만드는 중… (판매 사이트)');await save();const site=await buildSite([P],true);site.forEach(f=>files.push({name:'06_판매사이트/'+f.name,data:f.data}));
  download(await makeZip(files),base+'_판매패키지.zip');toast('판매 패키지를 저장했어요.')}catch(e){toast(safeErr(e),5000)}finally{busy(false)}};
-$('#toShop').onclick=async()=>{if(!guard())return;await save();go('shop');toast('판매 사이트에 진열됐어요.')};
+$('#toShop').onclick=async()=>{if(!guard()||!ensureClean())return;await save();if(nlReady()){busy(true,'판매 사이트에 올리는 중…');try{await publishNow(false)}finally{busy(false)}}else toast('판매 사이트 자동 공개를 한 번만 연결해 주세요.');go('shop')};
 
 /* ───────── 05 상점 ───────── */
 const SHOP_FIELDS=[
@@ -730,8 +735,8 @@ function renderShopForm(){const s=getShop();$('#shopForm').innerHTML=SHOP_FIELDS
  const bw=()=>{const m=bizMissing(),a=addrMissing(),pm=payMissing();const msgs=[];if(m.length)msgs.push(`사업자 정보 미입력: <b>${m.join(', ')}</b> — 온라인 판매 시 사이트 하단에 꼭 표시해야 해요.`);if(a.length)msgs.push(`주소 미입력: <b>${a.join(', ')}</b> — 상세페이지 배송·반품 안내에 들어가요.`);if(pm)msgs.push('결제 수단이 없어요. 계좌·토스·카카오페이·카드결제 링크 중 하나 이상 입력하세요.');$('#bizWarn').innerHTML=msgs.length?`<div class="warn" style="margin:0">${msgs.join('<br>')}</div>`:''};bw();
  $$('#shopForm [data-s]').forEach(i=>i.oninput=()=>{const s=getShop();s[i.dataset.s]=i.value.trim();setShop(s);bw();clearTimeout(renderShop._t);renderShop._t=setTimeout(previewShop,800)})}
 async function allProducts(){const ps=await DB.all('products');return ps.filter(p=>p.ai&&p.imgs&&Object.keys(p.imgs).length).sort((a,b)=>b.createdAt-a.createdAt)}
-async function renderShop(){renderShopForm();const ps=await allProducts();const box=$('#plist');if(!ps.length){box.innerHTML='<div class="empty">아직 등록된 상품이 없어요. 사진을 올려 첫 상품을 만들어 보세요.</div>'}else{const items=[];for(const p of ps){const k=['packshot','original','styled'].find(k=>p.imgs[k]);const b=k?await DB.get('blobs',p.id+':'+k):null;items.push(`<div class="pitem"><img src="${b?URL.createObjectURL(b):''}" alt=""><div><b>${esc(p.name||'이름 없음')}</b><small>${CATS[p.category]?.ko||''} · ${p.price?won(p.price):'가격 미입력'}</small></div><div class="row"><button class="btn ghost sm" data-open="${p.id}">편집</button><button class="btn danger sm" data-del="${p.id}">삭제</button></div></div>`)}box.innerHTML=items.join('');
-  box.querySelectorAll('[data-open]').forEach(b=>b.onclick=async()=>{await loadProduct(b.dataset.open);go('detail')});box.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{if(!confirm('이 상품을 삭제할까요? 되돌릴 수 없어요.'))return;const p=await DB.get('products',b.dataset.del);for(const k of Object.keys(p.imgs||{}))await DB.del('blobs',p.id+':'+k);await DB.del('products',p.id);if(P&&P.id===p.id)newProduct();renderShop()})}
+async function renderShop(){renderPub();renderShopForm();const ps=await allProducts();const box=$('#plist');if(!ps.length){box.innerHTML='<div class="empty">아직 등록된 상품이 없어요. 사진을 올려 첫 상품을 만들어 보세요.</div>'}else{const items=[];for(const p of ps){const k=['packshot','original','styled'].find(k=>p.imgs[k]);const b=k?await DB.get('blobs',p.id+':'+k):null;items.push(`<div class="pitem"><img src="${b?URL.createObjectURL(b):''}" alt=""><div><b>${esc(p.name||'이름 없음')}</b><small>${CATS[p.category]?.ko||''} · ${p.price?won(p.price):'가격 미입력'}</small></div><div class="row"><button class="btn ghost sm" data-open="${p.id}">편집</button><button class="btn danger sm" data-del="${p.id}">삭제</button></div></div>`)}box.innerHTML=items.join('');
+  box.querySelectorAll('[data-open]').forEach(b=>b.onclick=async()=>{await loadProduct(b.dataset.open);go('detail')});box.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{if(!confirm('이 상품을 삭제할까요? 되돌릴 수 없어요.'))return;const p=await DB.get('products',b.dataset.del);for(const k of Object.keys(p.imgs||{}))await DB.del('blobs',p.id+':'+k);await DB.del('products',p.id);if(P&&P.id===p.id)newProduct();renderShop();autoPublish()})}
  previewShop()}
 let shopUrls=[];
 async function previewShop(){shopUrls.forEach(u=>URL.revokeObjectURL(u));shopUrls=[];const ps=await allProducts();const files=await buildSite(ps,false);$('#shopFrame').srcdoc=files.find(f=>f.name==='index.html').data}
@@ -919,8 +924,50 @@ function SHOP_RUNTIME(){
   if(h==='#/checkout')return checkout();if(h==='#/done')return done();if(h==='#/privacy')return privacy();if(h==='#/terms')return terms();if(h==='#/delivery')return delivery();home()}
  window.addEventListener('hashchange',function(){route()});route()}
 
+/* ───────── 판매 사이트 자동 공개 (Netlify) ───────── */
+const NL_KEY='gemshot-netlify-v1';
+function nlCfg(){try{return JSON.parse(localStorage.getItem(NL_KEY)||'{}')}catch(e){return{}}}
+function nlSet(c){try{localStorage.setItem(NL_KEY,JSON.stringify(c))}catch(e){}}
+function nlReady(){const c=nlCfg();return !!(c.token&&c.siteId)}
+async function nl(path,opt={}){const c=nlCfg();const r=await fetch('https://api.netlify.com/api/v1'+path,{...opt,headers:{Authorization:'Bearer '+c.token,...(opt.headers||{})}});const t=await r.text();let j={};try{j=JSON.parse(t)}catch(e){}
+ if(!r.ok){const e=Error(r.status===401?'Netlify 토큰이 올바르지 않거나 만료됐어요. 토큰을 다시 만들어 연결해 주세요.':r.status===422?'이미 다른 사람이 쓰는 사이트 주소예요. 다른 주소를 입력하세요.':'Netlify 오류 '+r.status+': '+String(j.message||t).slice(0,140));e.status=r.status;throw e}return j}
+async function nlConnect(token,name){token=String(token||'').trim();name=String(name||'').toLowerCase().replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);
+ if(!token)throw Error('Netlify 토큰을 붙여넣어 주세요.');if(!name||name.length<3)throw Error('사이트 주소를 영문 소문자·숫자 3자 이상으로 입력해 주세요.');
+ nlSet({token});await nl('/user');let site=null;
+ try{site=await nl('/sites',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})})}
+ catch(e){if(e.status!==422)throw e;const list=await nl('/sites?filter=all&per_page=100');site=(list||[]).find(s=>s.name===name);if(!site)throw e}
+ const c={token,siteId:site.id||site.site_id,name:site.name,url:(site.ssl_url||site.url||`https://${name}.netlify.app`).replace(/^http:/,'https:')+'/',auto:true};c.url=c.url.replace(/\/+$/,'/');nlSet(c);return c}
+async function nlPublish(prog){const c=nlCfg();const ps=await allProducts();if(!ps.length)throw Error('올릴 상품이 없어요. 먼저 상품을 만들어 주세요.');
+ prog&&prog('사이트 파일 만드는 중…');const files=await buildSite(ps,true);prog&&prog('압축 중…');const zip=await makeZip(files);
+ prog&&prog('업로드 중… ('+(zip.size/1048576).toFixed(1)+'MB)');const d=await nl(`/sites/${c.siteId}/deploys`,{method:'POST',headers:{'Content-Type':'application/zip'},body:zip});
+ for(let i=0;i<60;i++){const s=await nl(`/deploys/${d.id}`);if(s.state==='ready'){c.lastPublish=Date.now();nlSet(c);return{url:c.url}}if(s.state==='error')throw Error('배포 실패: '+(s.error_message||'알 수 없는 오류'));prog&&prog('공개 준비 중…');await sleep(2000)}
+ c.lastPublish=Date.now();nlSet(c);return{url:c.url}}
+let pubBusy=false,pubAgain=false;
+function setPubMsg(m){const el=$('#nlMsg');if(el)el.textContent=m;const ui=$('#pubInfo');if(ui)ui.textContent=m}
+async function publishNow(silent){if(!nlReady()){if(!silent){go('shop');toast('판매 사이트 자동 공개를 한 번만 연결해 주세요.')}return null}
+ if(pubBusy){pubAgain=true;return null}pubBusy=true;setPubMsg('판매 사이트에 올리는 중…');
+ try{const r=await nlPublish(setPubMsg);setPubMsg('✓ 판매 사이트 업로드 완료 · '+new Date().toLocaleTimeString('ko-KR'));toast('판매 사이트에 올렸어요! 이제 바로 판매할 수 있어요.',4000);renderPubBadge();return r}
+ catch(e){setPubMsg('업로드 실패: '+safeErr(e));toast('판매 사이트 업로드 실패: '+safeErr(e),6000);return null}
+ finally{pubBusy=false;if(pubAgain){pubAgain=false;publishNow(true)}}}
+function autoPublish(){const c=nlCfg();if(nlReady()&&c.auto!==false)return publishNow(true);return Promise.resolve(null)}
+function renderPubBadge(){const c=nlCfg(),b=$('#siteBadge');if(!b)return;if(nlReady()){b.hidden=false;b.href=c.url}else b.hidden=true;const h=$('#pubHint');if(h)h.innerHTML=nlReady()?(c.auto!==false?`✓ 완성되면 판매 사이트에 자동으로 올라가요: <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a>`:`판매 사이트: <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a> (자동 업로드 꺼짐)`):'판매 사이트 자동 업로드를 켜려면 <a href="#" onclick="go(\'shop\');return false">05 단계</a>에서 한 번만 연결하세요.'}
+function renderPub(){const box=$('#pubCard');if(!box)return;const c=nlCfg();
+ if(!nlReady()){box.innerHTML=`<h3>판매 사이트 자동 공개</h3><p class="hint">한 번만 연결하면, 사진을 올려 상품이 완성될 때마다 판매 사이트에 <b>자동으로 업로드</b>되어 바로 판매할 수 있어요. (Netlify 무료 호스팅 · 쇼핑몰 용도 사용 가능)</p>
+ <ol class="guide" style="padding-left:20px;margin:0 0 12px"><li><a href="https://app.netlify.com/signup" target="_blank" rel="noopener">Netlify 무료 가입</a> (구글 계정으로 가입 가능)</li><li><a href="https://app.netlify.com/user/applications#personal-access-tokens" target="_blank" rel="noopener">토큰 만들기 페이지</a> → <b>New access token</b> → 이름 아무거나 → 만료 기간 선택 → <b>Generate token</b> → 토큰 복사</li><li>아래에 붙여넣고 원하는 사이트 주소를 정한 뒤 연결</li></ol>
+ <div class="form"><label class="f full">Netlify 토큰<input type="password" id="nlToken" placeholder="nfp_로 시작하는 토큰" autocomplete="off"></label><label class="f full">사이트 주소 <span class="s">영문 소문자·숫자·하이픈</span><div class="row" style="flex-wrap:nowrap"><input type="text" id="nlName" placeholder="my-jewelry-shop" value="${esc((getShop().name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''))}"><span class="cost">.netlify.app</span></div></label></div>
+ <button class="btn gold" id="nlConnect" style="margin-top:12px">연결하고 판매 사이트 만들기</button><p class="cost" id="nlMsg" style="margin-top:8px">토큰은 이 기기 브라우저에만 저장되고 Netlify에만 전송돼요.</p>`;
+  $('#nlConnect').onclick=async()=>{const b=$('#nlConnect');b.disabled=true;setPubMsg('연결 중…');try{await nlConnect($('#nlToken').value,$('#nlName').value);renderPub();renderPubBadge();toast('연결됐어요! 판매 사이트를 올리는 중이에요.');if((await allProducts()).length)await publishNow(true);else setPubMsg('연결 완료. 상품을 만들면 자동으로 올라가요.')}catch(e){nlSet({});setPubMsg(safeErr(e));b.disabled=false}};return}
+ box.innerHTML=`<h3>판매 사이트 공개 중</h3><p class="hint" style="margin-bottom:10px">손님에게 아래 주소를 보내면 바로 구매할 수 있어요.</p><a class="btn ghost" href="${esc(c.url)}" target="_blank" rel="noopener" style="width:100%;word-break:break-all">${esc(c.url)} ↗</a>
+ <label class="f" style="flex-direction:row;align-items:center;gap:8px;margin:12px 0;font-weight:600"><input type="checkbox" id="nlAuto" ${c.auto!==false?'checked':''}> 상품이 완성되면 자동으로 업로드</label>
+ <div class="row"><button class="btn gold sm" id="nlPub">지금 업데이트</button><button class="btn ghost sm" id="nlCopy">주소 복사</button><button class="btn danger sm" id="nlOut">연결 해제</button></div>
+ <p class="cost" id="nlMsg" style="margin-top:8px">${c.lastPublish?'마지막 업로드: '+new Date(c.lastPublish).toLocaleString('ko-KR'):'아직 업로드 전이에요.'} · 상점 정보나 상품을 고친 뒤에는 “지금 업데이트”를 눌러 주세요.</p>`;
+ $('#nlAuto').onchange=e=>{const x=nlCfg();x.auto=e.target.checked;nlSet(x);renderPubBadge()};
+ $('#nlPub').onclick=()=>publishNow(false);
+ $('#nlCopy').onclick=()=>{navigator.clipboard.writeText(c.url).then(()=>toast('주소를 복사했어요.'),()=>toast(c.url))};
+ $('#nlOut').onclick=()=>{if(!confirm('이 기기에서 판매 사이트 연결을 해제할까요? (사이트는 그대로 유지돼요)'))return;nlSet({});renderPub();renderPubBadge()}}
+
 /* ───────── 시작 ───────── */
-fillModelSelects();fillThemes();authUI();updateButtons();restoreAuth();
+fillModelSelects();fillThemes();authUI();updateButtons();restoreAuth();renderPubBadge();
 (async()=>{try{const id=localStorage.getItem(LAST_KEY);if(id&&await loadProduct(id)){$('#fileInfo').textContent='지난 작업을 불러왔어요: '+(P.name||'이름 없는 상품');if(P.ai){$('#progress').classList.remove('show')}}}catch(e){}})();
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
