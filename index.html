@@ -69,7 +69,7 @@ section.panel.active{display:block;animation:fade .25s}
 .form .full{grid-column:1/-1}
 label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#4c443a}
 label.f span.s{font-weight:400;color:var(--muted);font-size:12px}
-input[type=text],input[type=number],input[type=url],input[type=tel],input[type=email],select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px;font-size:14.5px;outline:none;transition:border .15s}
+input[type=text],input[type=password],input[type=number],input[type=url],input[type=tel],input[type=email],select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px;font-size:14.5px;outline:none;transition:border .15s}
 input:focus,select:focus,textarea:focus{border-color:var(--gold)}
 textarea{min-height:80px;resize:vertical;line-height:1.6}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -724,7 +724,7 @@ const SHOP_FIELDS=[
  ['#','입고지 (교환·반품 상품이 최종 입고되는 곳 · 비우면 반품지와 동일)'],
  ['inboundAddr','입고지 주소','물류창고·작업실 등','text',1],['inboundTel','입고지 연락처','','tel'],
  ['#','사업자 정보 (전자상거래법 필수 표시)'],
- ['company','상호','','text'],['ceo','대표자','','text'],['bizNo','사업자등록번호','000-00-00000','text'],['mailOrder','통신판매업 신고번호','제0000-서울강남-0000호','text'],['address','사업장 주소','','text',1],['privacyOfficer','개인정보 보호책임자','비우면 대표자','text'],['hosting','호스팅 제공자','예: Netlify / GitHub','text']];
+ ['company','상호','','text'],['ceo','대표자','','text'],['bizNo','사업자등록번호','000-00-00000','text'],['mailOrder','통신판매업 신고번호','제0000-서울강남-0000호','text'],['address','사업장 주소','','text',1],['privacyOfficer','개인정보 보호책임자','비우면 대표자','text'],['hosting','호스팅 제공자','Netlify','text']];
 const BIZ_REQ=['company','ceo','bizNo','mailOrder','address','phone'];
 function getShop(){try{return JSON.parse(localStorage.getItem(SHOP_KEY)||'{}')}catch(e){return{}}}
 function setShop(s){try{localStorage.setItem(SHOP_KEY,JSON.stringify(s))}catch(e){}}
@@ -754,7 +754,7 @@ function siteHTML(shop,products){const json=JSON.stringify({shop,products,date:t
  const l1=[shop.company&&'상호 '+esc(shop.company),shop.ceo&&'대표 '+esc(shop.ceo),shop.bizNo&&'사업자등록번호 '+esc(shop.bizNo)+(bizLink?` <a class="bz" href="${bizLink}" target="_blank" rel="noopener">[사업자정보확인]</a>`:''),shop.mailOrder&&'통신판매업 신고 '+esc(shop.mailOrder)].filter(Boolean).join(' · ');
  const l2=[shop.address&&'사업장 주소 '+esc(shop.address),shop.phone&&'고객센터 '+esc(shop.phone),shop.email&&'이메일 '+esc(shop.email)].filter(Boolean).join(' · ');
  const l3=[shop.shipFrom&&'출고지 '+esc(shop.shipFrom),shop.returnAddr&&'반품지 '+esc(shop.returnAddr)].filter(Boolean).join(' · ');
- const l4=['개인정보 보호책임자 '+esc(shop.privacyOfficer||shop.ceo||'-'),shop.hosting&&'호스팅 제공자 '+esc(shop.hosting)].filter(Boolean).join(' · ');
+ const l4=['개인정보 보호책임자 '+esc(shop.privacyOfficer||shop.ceo||'-'),'호스팅 제공자 '+esc(shop.hosting||'Netlify')].filter(Boolean).join(' · ');
  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(name)}</title><meta name="description" content="${esc(shop.tagline||name)}"><meta property="og:title" content="${esc(name)}"><meta property="og:description" content="${esc(shop.tagline||'')}">${products[0]?`<meta property="og:image" content="${esc(products[0].thumb)}">`:''}${FONT_LINKS}
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#221d17;background:#faf8f4;word-break:keep-all;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
@@ -954,7 +954,7 @@ function renderPubBadge(){const c=nlCfg(),b=$('#siteBadge');if(!b)return;if(nlRe
 function renderPub(){const box=$('#pubCard');if(!box)return;const c=nlCfg();
  if(!nlReady()){box.innerHTML=`<h3>판매 사이트 자동 공개</h3><p class="hint">한 번만 연결하면, 사진을 올려 상품이 완성될 때마다 판매 사이트에 <b>자동으로 업로드</b>되어 바로 판매할 수 있어요. (Netlify 무료 호스팅 · 쇼핑몰 용도 사용 가능)</p>
  <ol class="guide" style="padding-left:20px;margin:0 0 12px"><li><a href="https://app.netlify.com/signup" target="_blank" rel="noopener">Netlify 무료 가입</a> (구글 계정으로 가입 가능)</li><li><a href="https://app.netlify.com/user/applications#personal-access-tokens" target="_blank" rel="noopener">토큰 만들기 페이지</a> → <b>New access token</b> → 이름 아무거나 → 만료 기간 선택 → <b>Generate token</b> → 토큰 복사</li><li>아래에 붙여넣고 원하는 사이트 주소를 정한 뒤 연결</li></ol>
- <div class="form"><label class="f full">Netlify 토큰<input type="password" id="nlToken" placeholder="nfp_로 시작하는 토큰" autocomplete="off"></label><label class="f full">사이트 주소 <span class="s">영문 소문자·숫자·하이픈</span><div class="row" style="flex-wrap:nowrap"><input type="text" id="nlName" placeholder="my-jewelry-shop" value="${esc((getShop().name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''))}"><span class="cost">.netlify.app</span></div></label></div>
+ <div class="form"><label class="f full">Netlify 토큰<input type="password" id="nlToken" placeholder="nfp_로 시작하는 토큰" autocomplete="off"></label><label class="f full">사이트 주소 <span class="s">영문 소문자·숫자·하이픈</span><div class="row" style="flex-wrap:nowrap"><input type="text" id="nlName" placeholder="my-jewelry-shop" value="${esc((getShop().name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''))}"><span class="cost">.netlify.app</span></div></label></div>
  <button class="btn gold" id="nlConnect" style="margin-top:12px">연결하고 판매 사이트 만들기</button><p class="cost" id="nlMsg" style="margin-top:8px">토큰은 이 기기 브라우저에만 저장되고 Netlify에만 전송돼요.</p>`;
   $('#nlConnect').onclick=async()=>{const b=$('#nlConnect');b.disabled=true;setPubMsg('연결 중…');try{await nlConnect($('#nlToken').value,$('#nlName').value);renderPub();renderPubBadge();toast('연결됐어요! 판매 사이트를 올리는 중이에요.');if((await allProducts()).length)await publishNow(true);else setPubMsg('연결 완료. 상품을 만들면 자동으로 올라가요.')}catch(e){nlSet({});setPubMsg(safeErr(e));b.disabled=false}};return}
  box.innerHTML=`<h3>판매 사이트 공개 중</h3><p class="hint" style="margin-bottom:10px">손님에게 아래 주소를 보내면 바로 구매할 수 있어요.</p><a class="btn ghost" href="${esc(c.url)}" target="_blank" rel="noopener" style="width:100%;word-break:break-all">${esc(c.url)} ↗</a>
