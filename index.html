@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>젬샷 스튜디오 · 사진 한 장으로 완성하는 주얼리 판매 페이지</title>
+<meta name="description" content="팔찌·목걸이·반지 사진 한 장으로 상품명, 제품 설명, 품질 정보, 판매 이미지, 상세페이지, 판매 사이트까지 한 번에 만듭니다.">
+<meta property="og:title" content="젬샷 스튜디오 · 사진 한 장이 판매 페이지가 되는 순간">
+<meta property="og:description" content="팔찌·목걸이·반지 사진 한 장으로 상세페이지와 판매 사이트까지 완성">
+<meta property="og:image" content="https://silkim1220-source.github.io/gemshot/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1f1b16">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&display=swap">
+<style>
+:root{--ink:#1f1b16;--paper:#f7f3ec;--card:#fffdf9;--line:#e6ddcf;--gold:#b08d57;--gold2:#8a6a3c;--muted:#7a7064;--ok:#3d7a5a;--err:#b44a3a;--r:18px}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;word-break:keep-all}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+header.top{position:sticky;top:0;z-index:30;background:rgba(247,243,236,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1240px;margin:auto;display:flex;align-items:center;gap:10px;padding:10px 18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:17px;cursor:pointer}
+.brand svg{width:30px;height:30px;flex:none}
+.brand small{display:block;font:600 10px/1.2 'Cormorant Garamond',serif;letter-spacing:.25em;color:var(--gold2)}
+.spacer{flex:1}
+.badge{font-size:12.5px;padding:7px 11px;border-radius:99px;border:1px solid var(--line);background:#fff;cursor:pointer;white-space:nowrap}
+.badge.on{border-color:#bcd8c8;background:#eef7f1;color:var(--ok)}
+.btn{border:0;border-radius:12px;padding:11px 16px;background:var(--ink);color:#fff;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;justify-content:center;transition:transform .15s,opacity .15s;text-decoration:none;font-size:14.5px;line-height:1.2}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.btn.gold{background:linear-gradient(135deg,#c9a46a,#9c7640);color:#fff}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:9px}
+.btn.lg{padding:15px 22px;font-size:16.5px;border-radius:14px}
+.btn.danger{background:#fff;color:var(--err);border:1px solid #efcfc8}
+nav.steps{max-width:1240px;margin:auto;display:flex;gap:6px;padding:0 18px 10px;overflow-x:auto;scrollbar-width:none}
+nav.steps::-webkit-scrollbar{display:none}
+nav.steps button{flex:none;border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 14px;font-size:14px;cursor:pointer;color:var(--muted)}
+nav.steps button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+nav.steps button b{font-family:'Cormorant Garamond',serif;margin-right:5px;font-size:15px}
+main{max-width:1240px;margin:auto;padding:22px 18px 90px}
+section.panel{display:none}
+section.panel.active{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.intro{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+.intro h1{font-family:'Gowun Batang',serif;font-size:clamp(30px,4.2vw,50px);line-height:1.25;margin:10px 0 14px;letter-spacing:-.02em}
+.eyebrow{font:700 12px/1 'Cormorant Garamond',serif;letter-spacing:.3em;color:var(--gold2);text-transform:uppercase}
+.lead{color:var(--muted);line-height:1.75;margin:0 0 18px;font-size:15.5px}
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:18px 0}
+.feat div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px;color:var(--muted)}
+.feat b{display:block;color:var(--ink);font-size:14px;margin-bottom:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.card h3{margin:0 0 4px;font-size:17px}
+.card .hint{color:var(--muted);font-size:13.5px;margin:0 0 14px;line-height:1.6}
+.drop{border:1.5px dashed #cdbfa8;border-radius:20px;background:#fff;aspect-ratio:1/1;max-height:440px;width:100%;display:grid;place-items:center;text-align:center;cursor:pointer;position:relative;overflow:hidden;transition:.2s}
+.drop.drag{border-color:var(--gold);background:#fffaf0}
+.drop img{width:100%;height:100%;object-fit:contain;position:absolute;inset:0;background:#fff}
+.drop .ph{padding:24px;color:var(--muted);line-height:1.7}
+.drop .ph svg{width:56px;height:56px;color:var(--gold);margin-bottom:8px}
+.drop .ph b{display:block;color:var(--ink);font-size:17px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .full{grid-column:1/-1}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#4c443a}
+label.f span.s{font-weight:400;color:var(--muted);font-size:12px}
+input[type=text],input[type=number],input[type=url],input[type=tel],input[type=email],select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px;font-size:14.5px;outline:none;transition:border .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:80px;resize:vertical;line-height:1.6}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cta{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.cost{font-size:12.5px;color:var(--muted);line-height:1.6}
+.progress{margin-top:14px;display:none}
+.progress.show{display:block}
+.pstep{display:flex;gap:10px;align-items:center;padding:8px 0;font-size:14px;color:var(--muted);border-bottom:1px dashed var(--line)}
+.pstep i{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-style:normal;font-size:11px}
+.pstep.run{color:var(--ink)}.pstep.run i{border-color:var(--gold);border-top-color:transparent;animation:spin 1s linear infinite}
+.pstep.done{color:var(--ok)}.pstep.done i{background:var(--ok);border-color:var(--ok);color:#fff}
+.pstep.err{color:var(--err)}.pstep.err i{border-color:var(--err);color:var(--err)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.editor .grp{margin-bottom:18px}
+.editor .grp>label{display:block;font-size:13.5px;font-weight:700;margin-bottom:7px}
+.pair{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr) auto;gap:6px;margin-bottom:6px}
+.pair textarea{min-height:44px}
+.x{border:1px solid var(--line);background:#fff;border-radius:9px;width:34px;cursor:pointer;color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 11px;font-size:13px;cursor:pointer}
+.chip.on{border-color:var(--gold);background:#fbf4e7;color:var(--gold2);font-weight:700}
+.warn{background:#fff6ec;border:1px solid #f1d9b8;color:#7a5520;border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.6;margin-bottom:14px}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.shot{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.shot .im{aspect-ratio:1/1;background:#f3eee6 center/cover;position:relative;display:grid;place-items:center;color:var(--muted);font-size:13px}
+.shot .im img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.shot .im .spin{width:34px;height:34px;border:3px solid #e2d6c3;border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
+.shot .meta{padding:10px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.shot .meta b{font-size:14px}
+.shot .meta small{color:var(--muted);font-size:12px;line-height:1.5}
+.shot .meta .err{color:var(--err);font-size:12px}
+.shot .acts{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto}
+.shot label.chk{display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--muted)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.toolbar .sp{flex:1}
+.pvwrap{background:#e9e2d6;border-radius:18px;padding:14px;overflow:hidden}
+.pvbox{width:860px;transform-origin:0 0;margin:0 auto}
+.pvbox iframe{width:860px;border:0;display:block;background:#fff;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,.12)}
+.exports{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:14px 0}
+.exports button{text-align:left;justify-content:flex-start;flex-direction:column;align-items:flex-start;gap:3px;padding:13px 14px}
+.exports button small{font-weight:400;font-size:12px;opacity:.75}
+.plist{display:grid;gap:10px}
+.pitem{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px}
+.pitem img{width:64px;height:64px;object-fit:cover;border-radius:10px;background:#f3eee6}
+.pitem b{display:block;font-size:14.5px}
+.pitem small{color:var(--muted);font-size:12.5px}
+.shopframe{width:100%;height:760px;border:1px solid var(--line);border-radius:16px;background:#fff}
+dialog{border:0;border-radius:20px;padding:0;max-width:520px;width:calc(100% - 28px);box-shadow:0 30px 80px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(20,16,12,.5)}
+.dlg{padding:24px}
+.dlg h3{margin:0 0 8px;font-family:'Gowun Batang',serif;font-size:22px}
+.dlg p{color:var(--muted);line-height:1.7;font-size:14px;margin:0 0 12px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(30px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:99;max-width:calc(100% - 30px);text-align:center;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.empty{padding:40px 20px;text-align:center;color:var(--muted);line-height:1.8}
+.guide{font-size:13.5px;line-height:1.8;color:#4c443a}
+.guide ol{padding-left:20px;margin:6px 0}
+.busy{position:fixed;inset:0;background:rgba(247,243,236,.75);z-index:90;display:none;place-items:center;text-align:center;font-weight:700}
+.busy.show{display:grid}
+.busy .spin{width:42px;height:42px;border:4px solid #e2d6c3;border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
+footer.app{text-align:center;color:var(--muted);font-size:12px;padding:20px;line-height:1.7}
+@media (max-width:900px){.intro,.split{grid-template-columns:1fr}.form{grid-template-columns:1fr}.feat{grid-template-columns:1fr 1fr}.shopframe{height:640px}}
+@media (max-width:520px){.top-in{padding:9px 12px}main{padding:16px 12px 80px}.brand span.t{display:none}.pair{grid-template-columns:1fr auto}.pair>:nth-child(2){grid-column:1/2}.pvwrap{padding:8px}.shots{grid-template-columns:1fr 1fr;gap:10px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand" onclick="go('upload')"><svg viewBox="0 0 64 64" fill="none"><path d="M14 22 24 10h16l10 12-18 32z" fill="#c9a46a"/><path d="M14 22h36L32 54z" fill="#a07a42"/><path d="M24 10l-4 12h24l-4-12" fill="#e2c48e"/><path d="M20 22l12 32 12-32" stroke="#fff" stroke-opacity=".5"/></svg><div><span class="t">젬샷 스튜디오</span><small>GEMSHOT</small></div></div>
+    <div class="spacer"></div>
+    <button class="btn ghost sm" onclick="newProduct()">+ 새 상품</button>
+    <button class="badge" id="connBadge" onclick="openAuth()">AI 연결 필요</button>
+  </div>
+  <nav class="steps" id="steps">
+    <button data-tab="upload" class="active"><b>01</b>사진 업로드</button>
+    <button data-tab="info"><b>02</b>상품 정보</button>
+    <button data-tab="images"><b>03</b>판매 이미지</button>
+    <button data-tab="detail"><b>04</b>상세페이지</button>
+    <button data-tab="shop"><b>05</b>내 판매 사이트</button>
+  </nav>
+</header>
+
+<main>
+<!-- 01 UPLOAD -->
+<section class="panel active" id="p-upload">
+  <div class="intro">
+    <div>
+      <div class="eyebrow">One photo · Ready to sell</div>
+      <h1>사진 한 장이<br>판매 페이지가 되는 순간</h1>
+      <p class="lead">팔찌·목걸이·반지 사진 한 장만 올리세요. AI가 상품명, 제품 설명, 품질·스펙, 상품정보제공고시, 판매 이미지 7종, 860px 상세페이지, 주문이 가능한 판매 사이트까지 한 번에 만들어 드립니다.</p>
+      <div class="feat">
+        <div><b>상품명·카피</b>후보 5개 + 스마트스토어/쿠팡 제목</div>
+        <div><b>품질·스펙</b>소재·사이즈·관리법·고시 정보</div>
+        <div><b>판매 이미지 7종</b>흰배경·연출·착용·디테일·선물</div>
+        <div><b>상세페이지</b>JPG 통이미지·분할·HTML</div>
+        <div><b>썸네일·SNS</b>1000px 썸네일, 인스타 카드</div>
+        <div><b>판매 사이트</b>주문서·계좌 안내 포함</div>
+      </div>
+      <div class="card">
+        <h3>상품 기본 정보 <span class="cost">(아는 것만 입력, 비워도 됩니다)</span></h3>
+        <div class="form" style="margin-top:12px">
+          <label class="f">종류<select id="inCat"><option value="auto">자동 인식</option><option value="ring">반지</option><option value="bracelet">팔찌</option><option value="necklace">목걸이</option><option value="earring">귀걸이</option><option value="other">기타 주얼리</option></select></label>
+          <label class="f">분위기<select id="inTone"><option value="luxury">고급스러운</option><option value="daily">데일리·편안한</option><option value="lovely">러블리</option><option value="minimal">미니멀·모던</option><option value="vintage">빈티지</option></select></label>
+          <label class="f">판매가(원)<input type="number" id="inPrice" placeholder="예: 39000" min="0"></label>
+          <label class="f">정가(할인 표시용)<input type="number" id="inList" placeholder="예: 49000" min="0"></label>
+          <label class="f full">소재·순도 <span class="s">예: 925 실버 + 14K 도금, 담수진주 / 14K 옐로우골드</span><input type="text" id="inMat" placeholder="모르면 비워두세요 (판매자 확인 필요로 표시)"></label>
+          <label class="f full">옵션·사이즈 <span class="s">쉼표로 구분. 예: 9호, 11호, 13호 / 16cm, 17cm</span><input type="text" id="inOpt"></label>
+          <label class="f full">추가 메모 <span class="s">중량, 제조국, 원석 이름, 특징, 타깃 고객 등</span><textarea id="inMemo" placeholder="예: 국내 수작업, 니켈프리 인증, 20대 여성 선물용"></textarea></label>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="drop" id="drop">
+        <div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4m0 0-4 4m4-4 4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><b>주얼리 사진 올리기</b>클릭하거나 사진을 끌어다 놓으세요<br><small>휴대폰에서는 바로 촬영도 가능해요 · JPG/PNG/HEIC</small></div>
+        <input type="file" id="file" accept="image/*" hidden>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn ghost sm" onclick="$('#file').click()">사진 선택/변경</button>
+        <span class="cost" id="fileInfo">팁: 밝은 곳에서 제품이 크게 나온 사진일수록 결과가 좋아요.</span>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>이미지 생성 품질</h3>
+        <select id="imgModel" style="margin-top:8px"></select>
+        <div class="cta">
+          <button class="btn gold lg" id="runAll" disabled>✦ AI로 전부 만들기</button>
+          <button class="btn ghost" id="manualBtn" disabled>AI 없이 직접 작성하기 (원본 사진만 사용)</button>
+          <div class="cost" id="costInfo"></div>
+        </div>
+        <div class="progress" id="progress">
+          <div class="pstep" data-s="analyze"><i></i><span>사진 분석 · 상품명/설명/품질 정보 작성</span></div>
+          <div class="pstep" data-s="images"><i></i><span>판매 이미지 생성 <em id="imgCount"></em></span></div>
+          <div class="pstep" data-s="detail"><i></i><span>상세페이지 조립</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 INFO -->
+<section class="panel" id="p-info">
+  <div class="toolbar"><h2 style="margin:0;font-family:'Gowun Batang',serif">상품 정보 편집</h2><div class="sp"></div><button class="btn ghost sm" id="reAnalyze">AI 다시 작성</button><button class="btn sm" onclick="go('images')">다음: 판매 이미지 →</button></div>
+  <div id="verifyWarn"></div>
+  <div class="editor card" id="editor"><div class="empty">먼저 01 단계에서 사진을 올리고 만들기를 눌러주세요.</div></div>
+</section>
+
+<!-- 03 IMAGES -->
+<section class="panel" id="p-images">
+  <div class="toolbar"><h2 style="margin:0;font-family:'Gowun Batang',serif">판매 이미지</h2><div class="sp"></div><select id="imgModel2" style="width:auto"></select><button class="btn gold sm" id="genSel">선택한 이미지 생성</button><button class="btn ghost sm" id="dlImgs">전체 다운로드(ZIP)</button></div>
+  <p class="cost" style="margin-top:-6px">원본 사진 속 제품 모양을 유지하도록 지시해 생성합니다. AI 특성상 디테일이 조금 달라질 수 있으니, 실제 제품과 다른 컷은 다시 만들거나 ‘내 사진으로 교체’하세요.</p>
+  <div class="shots" id="shots"></div>
+</section>
+
+<!-- 04 DETAIL -->
+<section class="panel" id="p-detail">
+  <div class="toolbar"><h2 style="margin:0;font-family:'Gowun Batang',serif">상세페이지</h2><div class="sp"></div>
+    <label class="f" style="flex-direction:row;align-items:center;gap:6px">테마<select id="theme" style="width:auto"></select></label>
+  </div>
+  <div class="exports">
+    <button class="btn gold" id="exAll">판매 패키지 전체 ZIP<small>상세페이지·이미지·썸네일·SNS·텍스트·판매사이트</small></button>
+    <button class="btn" id="exJpg">상세페이지 JPG (통이미지)<small>스마트스토어·쿠팡 상세 등록용 860px</small></button>
+    <button class="btn ghost" id="exSplit">상세페이지 분할 JPG (ZIP)<small>섹션별로 나눈 이미지</small></button>
+    <button class="btn ghost" id="exThumb">썸네일 1000×1000 (ZIP)<small>대표·추가 이미지용</small></button>
+    <button class="btn ghost" id="exSns">인스타그램 카드<small>1080×1350 홍보 이미지</small></button>
+    <button class="btn ghost" id="exTxt">상품 텍스트 (TXT)<small>상품명·태그·설명·캡션 모음</small></button>
+    <button class="btn ghost" id="exHtml">상세페이지 HTML (ZIP)<small>자사몰·카페24 HTML 편집기용</small></button>
+    <button class="btn ghost" id="toShop">내 판매 사이트에 등록 →<small>주문 가능한 쇼핑 페이지</small></button>
+  </div>
+  <div class="pvwrap" id="pvwrap"><div class="pvbox" id="pvbox"><iframe id="dpFrame" title="상세페이지 미리보기"></iframe></div></div>
+</section>
+
+<!-- 05 SHOP -->
+<section class="panel" id="p-shop">
+  <div class="split">
+    <div>
+      <div class="card">
+        <h3>상점 정보</h3>
+        <p class="hint">판매 사이트와 상세페이지의 배송·교환 안내, 하단 사업자 정보에 들어갑니다. 이 기기에 저장돼요.</p>
+        <div class="form" id="shopForm"></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="row" style="justify-content:space-between"><h3>등록된 상품</h3><button class="btn ghost sm" onclick="newProduct()">+ 새 상품</button></div>
+        <p class="hint">여기 있는 모든 상품이 판매 사이트에 진열됩니다.</p>
+        <div class="plist" id="plist"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="row" style="justify-content:space-between;margin-bottom:10px"><h3>판매 사이트 미리보기</h3>
+          <div class="row"><button class="btn ghost sm" id="shopRefresh">새로고침</button><button class="btn gold sm" id="shopZip">판매 사이트 ZIP 받기</button></div></div>
+        <iframe class="shopframe" id="shopFrame" title="판매 사이트 미리보기"></iframe>
+        <div class="guide" style="margin-top:14px">
+          <b>판매 사이트 무료로 공개하기 (5분)</b>
+          <ol>
+            <li>‘판매 사이트 ZIP 받기’ → 압축을 풉니다.</li>
+            <li><a href="https://app.netlify.com/drop" target="_blank" rel="noopener">Netlify Drop</a>에 풀린 폴더를 통째로 끌어다 놓으면 바로 주소가 생깁니다. (GitHub Pages도 가능)</li>
+            <li>손님은 구매하기 → <b>주문/결제 페이지</b>(주문자·배송지 입력, 우편번호 검색, 개인정보 동의) → 주문 완료 화면에서 주문서를 보내고 계좌이체·토스·카카오페이·카드결제 링크로 결제합니다.</li><li>‘주문 자동 접수 주소’(Formspree 등)를 넣으면 주문이 자동으로 모입니다.</li>
+            <li>스마트스토어·쿠팡 링크를 상품에 넣으면 ‘바로 구매’ 버튼이 생깁니다.</li>
+          </ol>
+          <span class="cost">※ 온라인 판매 시 사업자등록·통신판매업 신고 정보를 하단에 표시해야 합니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="app">젬샷 스튜디오 · AI 생성 결과는 판매 전 실제 제품과 반드시 대조해 주세요.<br>작업 내용은 이 기기 브라우저에만 저장됩니다.</footer>
+
+<dialog id="authDlg"><div class="dlg">
+  <h3>AI 연결</h3>
+  <p id="authText">Pollinations 계정을 한 번 승인하면 사진 분석과 이미지 생성을 할 수 있어요. 비밀 키를 복사할 필요가 없습니다.</p>
+  <p class="cost" id="authBal"></p>
+  <div class="row" id="authStartRow"><button class="btn gold" id="authStart">안전하게 계정 연결 시작</button></div>
+  <p style="margin-top:12px"><a class="btn" id="authOpen" href="#" target="_blank" rel="noopener" hidden>승인 화면 열기 →</a></p>
+  <p class="cost" id="authWait"></p>
+  <div class="row" style="justify-content:flex-end;margin-top:8px"><button class="btn danger sm" id="authOut" hidden>이 기기의 연결 해제</button><button class="btn ghost sm" onclick="$('#authDlg').close()">닫기</button></div>
+</div></dialog>
+
+<div class="busy" id="busy"><div><div class="spin"></div><div id="busyText">만드는 중…</div></div></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="replaceFile" accept="image/*" hidden>
+
+<script>
+'use strict';
+/* ───────── 기본 설정 ───────── */
+const API='https://gen.pollinations.ai',AUTH='https://enter.pollinations.ai',MEDIA='https://media.pollinations.ai';
+const TOKEN_KEY='gemshot-agent-v1',SHOP_KEY='gemshot-shop-v1',LAST_KEY='gemshot-last-v1';
+const TEXT_MODELS=['openai/gpt-6-luna','openai/gpt-5.4-nano'];
+const H2C='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+const FONT_LINKS='<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&display=swap">';
+const IMG_MODELS=[
+ {id:'black-forest-labs/flux.2-klein-4b',name:'절약형 · FLUX.2 Klein (장당 약 0.005 Pollen)',cost:.005},
+ {id:'openai/gpt-image-1-mini',name:'균형형 · GPT Image 1 Mini (장당 약 0.01 Pollen)',cost:.012},
+ {id:'black-forest-labs/flux.1-kontext-pro',name:'정밀 편집 · FLUX Kontext Pro (장당 0.03 Pollen)',cost:.03},
+ {id:'google/gemini-2.5-flash-image',name:'고품질 · Nano Banana (장당 약 0.04, 유료 Pollen)',cost:.04}
+];
+const CATS={ring:{ko:'반지',en:'RING'},bracelet:{ko:'팔찌',en:'BRACELET'},necklace:{ko:'목걸이',en:'NECKLACE'},earring:{ko:'귀걸이',en:'EARRINGS'},other:{ko:'주얼리',en:'JEWELRY'}};
+const TONES={
+ luxury:{ko:'고급스러운',palette:'warm ivory and champagne gold',surface:'a cream marble slab with soft ivory silk',theme:'ivory'},
+ daily:{ko:'데일리·편안한',palette:'soft beige and natural linen',surface:'natural linen fabric with a few dried flowers',theme:'ivory'},
+ lovely:{ko:'러블리',palette:'blush pink and pearl white',surface:'blush pink satin with scattered rose petals',theme:'blush'},
+ minimal:{ko:'미니멀·모던',palette:'clean white and light gray',surface:'a smooth white stone plinth',theme:'mono'},
+ vintage:{ko:'빈티지',palette:'warm amber and antique brass',surface:'an antique wooden tray with vintage lace',theme:'ivory'}
+};
+const THEMES={
+ ivory:{name:'아이보리 골드',bg:'#f8f4ee',paper:'#fffdf9',ink:'#2a241d',sub:'#776b5e',accent:'#b08d57',soft:'#ebe1d2'},
+ mono:{name:'모던 블랙&화이트',bg:'#ffffff',paper:'#f5f5f4',ink:'#141414',sub:'#666666',accent:'#141414',soft:'#e7e7e7'},
+ blush:{name:'블러쉬 핑크',bg:'#fbf3f1',paper:'#fffaf9',ink:'#3a2a2a',sub:'#8a6c69',accent:'#c4847e',soft:'#f0dcd8'},
+ navy:{name:'미드나잇 네이비',bg:'#141b27',paper:'#1c2534',ink:'#f2ede4',sub:'#b4bac6',accent:'#cfa86a',soft:'#2c3850'},
+ sage:{name:'세이지 그린',bg:'#f3f5f0',paper:'#fbfcf9',ink:'#26302a',sub:'#69766c',accent:'#7f9a84',soft:'#dfe7de'}
+};
+const SHOTS=[
+ {key:'packshot',label:'대표 이미지 (흰 배경)',use:'스마트스토어·쿠팡 대표 이미지',w:1024,h:1024},
+ {key:'styled',label:'감성 연출컷',use:'상세페이지·SNS',w:1024,h:1280},
+ {key:'wear',label:'착용컷',use:'착용감·크기감 전달',w:1024,h:1280},
+ {key:'macro',label:'디테일 클로즈업',use:'품질·마감 강조',w:1024,h:1024},
+ {key:'lifestyle',label:'라이프스타일컷',use:'데일리 연출',w:1280,h:960},
+ {key:'gift',label:'선물 포장컷',use:'선물 수요 공략',w:1024,h:1024},
+ {key:'hero',label:'메인 배너컷',use:'상세페이지 첫 화면',w:1024,h:1280}
+];
+const VF='[판매자 확인 필요]';
+
+/* ───────── 유틸 ───────── */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const won=n=>Number(n||0).toLocaleString('ko-KR')+'원';
+function toast(m,ms=2600){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),ms)}
+function busy(on,txt){$('#busy').classList.toggle('show',!!on);if(txt)$('#busyText').textContent=txt}
+function safeErr(e){return String(e&&e.message||e||'오류').replace(/(?:sk_|pk_)[A-Za-z0-9_-]+/g,'[보안 정보]').slice(0,300)}
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)}
+function fileSafe(s){return String(s||'상품').replace(/[\\/:*?"<>|\s]+/g,'_').slice(0,40)}
+function getPath(o,p){return p.split('.').reduce((a,k)=>a==null?a:a[k],o)}
+function setPath(o,p,v){const ks=p.split('.');let a=o;ks.slice(0,-1).forEach(k=>{if(a[k]==null||typeof a[k]!=='object')a[k]={};a=a[k]});a[ks.at(-1)]=v}
+async function fetchT(url,opt={},ms=180000){const c=new AbortController();const t=setTimeout(()=>c.abort(),ms);try{return await fetch(url,{...opt,signal:c.signal})}catch(e){if(e.name==='AbortError')throw Error('응답 시간이 초과됐어요. 다시 시도해 주세요.');throw e}finally{clearTimeout(t)}}
+function b64ToBlob(b64){const bin=atob(b64);const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const type=u[0]===0x89?'image/png':u[0]===0x52?'image/webp':'image/jpeg';return new Blob([u],{type})}
+function blobToDataURL(b){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(b)})}
+async function loadBitmap(blob){try{return await createImageBitmap(blob)}catch(e){return await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(Error('이미지를 읽을 수 없어요. JPG나 PNG로 다시 올려주세요.'));i.src=URL.createObjectURL(blob)})}}
+function canvasBlob(c,type='image/jpeg',q=.92){return new Promise(r=>c.toBlob(r,type,q))}
+async function toJpeg(blob,max=1600,q=.9){const im=await loadBitmap(blob);const s=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);return canvasBlob(c,'image/jpeg',q)}
+async function squareThumb(blob,size=1000,contain=false){const im=await loadBitmap(blob);const c=document.createElement('canvas');c.width=c.height=size;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,size,size);let s=contain?Math.min(size/im.width,size/im.height)*.9:Math.max(size/im.width,size/im.height);const w=im.width*s,h=im.height*s;x.drawImage(im,(size-w)/2,(size-h)/2,w,h);return canvasBlob(c,'image/jpeg',.92)}
+
+/* ZIP (무압축) */
+const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(u){let c=0xFFFFFFFF;for(let i=0;i<u.length;i++)c=CRC[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+async function makeZip(files){const enc=new TextEncoder();const parts=[],cen=[];let off=0;const d=new Date();const dt=(d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1),dd=((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate();
+ for(const f of files){const nb=enc.encode(f.name);const data=typeof f.data==='string'?enc.encode(f.data):f.data instanceof Uint8Array?f.data:new Uint8Array(await f.data.arrayBuffer());const crc=crc32(data);
+  const l=new DataView(new ArrayBuffer(30));l.setUint32(0,0x04034b50,true);l.setUint16(4,20,true);l.setUint16(6,0x0800,true);l.setUint16(10,dt,true);l.setUint16(12,dd,true);l.setUint32(14,crc,true);l.setUint32(18,data.length,true);l.setUint32(22,data.length,true);l.setUint16(26,nb.length,true);parts.push(l.buffer,nb,data);
+  const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(12,dt,true);c.setUint16(14,dd,true);c.setUint32(16,crc,true);c.setUint32(20,data.length,true);c.setUint32(24,data.length,true);c.setUint16(28,nb.length,true);c.setUint32(42,off,true);cen.push(c.buffer,nb);off+=30+nb.length+data.length}
+ const cs=cen.reduce((s,b)=>s+b.byteLength,0);const e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+ return new Blob([...parts,...cen,e.buffer],{type:'application/zip'})}
+
+/* IndexedDB */
+const DB={db:null,open(){if(this.db)return Promise.resolve(this.db);return new Promise((res,rej)=>{const r=indexedDB.open('gemshot',1);r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore('products',{keyPath:'id'});d.createObjectStore('blobs')};r.onsuccess=()=>{this.db=r.result;res(r.result)};r.onerror=()=>rej(r.error)})},
+ async req(store,mode,fn){const d=await this.open();return new Promise((res,rej)=>{const t=d.transaction(store,mode);const q=fn(t.objectStore(store));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)})},
+ put(s,v,k){return this.req(s,'readwrite',o=>k===undefined?o.put(v):o.put(v,k))},get(s,k){return this.req(s,'readonly',o=>o.get(k))},all(s){return this.req(s,'readonly',o=>o.getAll())},del(s,k){return this.req(s,'readwrite',o=>o.delete(k))}};
+
+/* ───────── 상태 ───────── */
+let P=null;const blobs={},urls={};let token='',balance=null,device=null,deviceTimer=null,running=false;
+function blankProduct(){return{id:uid(),createdAt:Date.now(),updatedAt:Date.now(),category:'other',input:{},ai:null,name:'',nameEn:'',theme:'ivory',shots:{},imgs:{},price:'',listPrice:'',options:'',storeUrl:''}}
+async function setBlob(key,blob){if(!P)return;blobs[key]=blob;if(urls[key])URL.revokeObjectURL(urls[key]);urls[key]=URL.createObjectURL(blob);P.imgs[key]=true;await DB.put('blobs',blob,P.id+':'+key);await save()}
+async function removeBlob(key){delete blobs[key];if(urls[key])URL.revokeObjectURL(urls[key]);delete urls[key];if(P){delete P.imgs[key];await DB.del('blobs',P.id+':'+key);await save()}}
+let saveT=null;
+async function save(){if(!P)return;P.updatedAt=Date.now();await DB.put('products',JSON.parse(JSON.stringify(P)));try{localStorage.setItem(LAST_KEY,P.id)}catch(e){}}
+function saveSoon(){clearTimeout(saveT);saveT=setTimeout(()=>{save();if(curTab==='detail')renderDetail()},500)}
+async function loadProduct(id){const p=await DB.get('products',id);if(!p)return false;Object.keys(urls).forEach(k=>{URL.revokeObjectURL(urls[k]);delete urls[k];delete blobs[k]});P=p;for(const k of Object.keys(p.imgs||{})){const b=await DB.get('blobs',p.id+':'+k);if(b){blobs[k]=b;urls[k]=URL.createObjectURL(b)}else delete p.imgs[k]}
+ fillInputs();showDrop();return true}
+function fillInputs(){const i=P.input||{};$('#inCat').value=i.cat||'auto';$('#inTone').value=i.tone||'luxury';$('#inPrice').value=P.price||'';$('#inList').value=P.listPrice||'';$('#inMat').value=i.material||'';$('#inOpt').value=P.options||'';$('#inMemo').value=i.memo||'';updateButtons()}
+function readInputs(){if(!P)return;P.input={cat:$('#inCat').value,tone:$('#inTone').value,material:$('#inMat').value.trim(),memo:$('#inMemo').value.trim()};P.price=$('#inPrice').value;P.listPrice=$('#inList').value;P.options=$('#inOpt').value.trim();if(P.input.cat!=='auto')P.category=P.input.cat}
+async function newProduct(){Object.keys(urls).forEach(k=>{URL.revokeObjectURL(urls[k]);delete urls[k];delete blobs[k]});P=null;['inPrice','inList','inMat','inOpt','inMemo'].forEach(i=>$('#'+i).value='');$('#inCat').value='auto';showDrop();$('#progress').classList.remove('show');updateButtons();go('upload');try{localStorage.removeItem(LAST_KEY)}catch(e){}}
+
+/* ───────── 탭 ───────── */
+let curTab='upload';
+function go(t){curTab=t;$$('#steps button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));$$('section.panel').forEach(s=>s.classList.toggle('active',s.id==='p-'+t));window.scrollTo({top:0,behavior:'smooth'});
+ if(t==='info')renderEditor();if(t==='images')renderShots();if(t==='detail')renderDetail();if(t==='shop')renderShop()}
+$$('#steps button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
+
+/* ───────── 인증 (Pollinations 기기 승인) ───────── */
+function auth(){return{Authorization:'Bearer '+token}}
+function authUI(){const on=!!token;const b=$('#connBadge');b.textContent=on?'AI 연결됨'+(balance!=null?' · '+balance.toFixed(2)+' Pollen':''):'AI 연결 필요';b.classList.toggle('on',on);$('#authStartRow').hidden=on;$('#authOut').hidden=!on;$('#authText').textContent=on?'연결되어 있어요. 이 기기에 연결이 저장되어 다음에 열어도 바로 사용할 수 있어요. 승인한 유효기간이 끝나면 다시 연결하세요.':'Pollinations 계정을 한 번 승인하면 사진 분석과 이미지 생성을 할 수 있어요. 비밀 키를 복사할 필요가 없습니다.';$('#authBal').textContent=on&&balance!=null?'남은 승인 예산: '+balance.toFixed(4)+' Pollen':''}
+function openAuth(){authUI();$('#authDlg').showModal()}
+async function readBalance(){if(!token)return;try{const r=await fetch(API+'/account/balance',{headers:auth()});if(r.ok){const d=await r.json();const v=typeof d.accountBalance?.total==='number'?Math.min(d.balance,d.accountBalance.total):d.balance;balance=Number.isFinite(v)?v:null}}catch(e){}authUI()}
+function cancelDevice(){clearTimeout(deviceTimer);device=null;$('#authOpen').hidden=true;$('#authStart').disabled=false;$('#authStart').textContent='안전하게 계정 연결 시작'}
+$('#authStart').onclick=async()=>{cancelDevice();$('#authStart').disabled=true;$('#authStart').textContent='승인 링크 준비 중…';try{const r=await fetch(AUTH+'/api/device/code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});const d=await r.json();if(!r.ok||!d.device_code||!d.verification_uri_complete)throw Error('승인 링크를 만들지 못했어요. 잠시 후 다시 시도하세요.');const u=new URL(d.verification_uri_complete,AUTH);if(u.origin!==AUTH)throw Error('승인 주소를 확인할 수 없어요.');device={code:d.device_code,exp:Date.now()+Math.min(+d.expires_in||1800,1800)*1000,iv:Math.max(+d.interval||5,5)*1000,fail:0};$('#authOpen').href=u.href;$('#authOpen').hidden=false;$('#authWait').textContent='승인 화면에서 Pollinations 로그인 후 “Allow”를 누르세요. 예산 한도(예: 1~2 Pollen)와 유효기간을 정할 수 있어요. 승인하면 이 창이 자동으로 연결됩니다.';$('#authStart').textContent='새 링크 만들기';$('#authStart').disabled=false;deviceTimer=setTimeout(pollDevice,device.iv)}catch(e){cancelDevice();$('#authWait').textContent=safeErr(e)}};
+async function pollDevice(){const s=device;if(!s)return;if(Date.now()>s.exp){cancelDevice();$('#authWait').textContent='연결 시간이 만료됐어요. 다시 시작하세요.';return}
+ try{const r=await fetch(AUTH+'/api/device/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({device_code:s.code})});const d=await r.json();if(device!==s)return;if(d.access_token){token=d.access_token;try{localStorage.setItem(TOKEN_KEY,JSON.stringify({t:token,at:Date.now()}))}catch(e){}cancelDevice();$('#authWait').textContent='연결 완료! 창을 닫고 시작하세요.';await readBalance();toast('AI가 연결됐어요.');updateButtons();return}if(d.error==='slow_down')s.iv+=5000;else if(d.error!=='authorization_pending')throw Error('승인이 완료되지 않았어요. 취소했거나 링크가 만료됐을 수 있어요.');s.fail=0}catch(e){if(device!==s)return;if(++s.fail>=3){cancelDevice();$('#authWait').textContent=safeErr(e);return}}
+ deviceTimer=setTimeout(pollDevice,s.iv)}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&device){clearTimeout(deviceTimer);pollDevice()}});
+$('#authOut').onclick=()=>{token='';balance=null;try{localStorage.removeItem(TOKEN_KEY)}catch(e){}authUI();updateButtons();toast('이 기기의 연결을 해제했어요.')};
+async function restoreAuth(){let s=null;try{s=JSON.parse(localStorage.getItem(TOKEN_KEY)||'null')}catch(e){}if(!s||!s.t)return;token=s.t;authUI();try{const r=await fetch(API+'/account/key',{headers:auth()});if(r.status===401||r.status===403){token='';try{localStorage.removeItem(TOKEN_KEY)}catch(e){}toast('AI 승인 기간이 끝났어요. 다시 연결해 주세요.')}}catch(e){}await readBalance();updateButtons()}
+function needAuth(){if(token)return false;openAuth();toast('먼저 AI를 연결해 주세요.');return true}
+
+/* ───────── 업로드 ───────── */
+const drop=$('#drop');
+drop.onclick=()=>$('#file').click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag')};drop.ondragleave=()=>drop.classList.remove('drag');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)handleFile(f)};
+$('#file').onchange=e=>{const f=e.target.files[0];if(f)handleFile(f);e.target.value=''};
+async function prepImage(file,max=1536){const im=await loadBitmap(file);const s=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);return canvasBlob(c,'image/jpeg',.92)}
+async function handleFile(f){if(!/^image\//.test(f.type)&&!/\.(heic|heif|jpe?g|png|webp)$/i.test(f.name)){toast('이미지 파일을 올려주세요.');return}
+ try{busy(true,'사진 준비 중…');const b=await prepImage(f);const keep=P&&!P.ai;if(!P||!keep){const old=P;Object.keys(urls).forEach(k=>{URL.revokeObjectURL(urls[k]);delete urls[k];delete blobs[k]});P=blankProduct();if(old&&!old.ai){}}
+  readInputs();delete P.sourceUrl;await setBlob('original',b);showDrop();$('#fileInfo').textContent='사진 준비 완료 ('+Math.round(b.size/1024)+'KB). 이제 “AI로 전부 만들기”를 누르세요.';updateButtons()}catch(e){toast(safeErr(e))}finally{busy(false)}}
+function showDrop(){const old=drop.querySelector('img');if(old)old.remove();if(urls.original){const i=document.createElement('img');i.src=urls.original;i.alt='업로드한 주얼리';drop.appendChild(i)}}
+function selModel(){return $('#imgModel').value}
+function updateButtons(){const has=!!(P&&blobs.original);$('#runAll').disabled=!has||running;$('#manualBtn').disabled=!has||running;const m=IMG_MODELS.find(x=>x.id===selModel())||IMG_MODELS[0];$('#costInfo').textContent='예상 비용: 글 작성 약 0.003 + 이미지 7장 약 '+(m.cost*7).toFixed(3)+' Pollen'+(token?'':' · AI 연결이 필요해요 (오른쪽 위 버튼)')}
+function fillModelSelects(){for(const id of ['#imgModel','#imgModel2']){$(id).innerHTML=IMG_MODELS.map(m=>`<option value="${m.id}">${esc(m.name)}</option>`).join('')}
+ $('#imgModel').onchange=()=>{$('#imgModel2').value=$('#imgModel').value;updateButtons()};$('#imgModel2').onchange=()=>{$('#imgModel').value=$('#imgModel2').value;updateButtons()}}
+['inCat','inTone','inPrice','inList','inMat','inOpt','inMemo'].forEach(id=>$('#'+id).addEventListener('input',()=>{if(P){readInputs();saveSoon()}}));
+
+/* ───────── AI 분석 ───────── */
+function analyzePrompt(){const i=P.input||{};return `다음 주얼리 사진을 꼼꼼히 관찰하고, 한국 온라인 쇼핑몰(스마트스토어·쿠팡·아이디어스·자사몰) 판매에 바로 쓸 수 있는 콘텐츠를 만들어 주세요.
+
+[판매자 입력]
+- 종류: ${i.cat&&i.cat!=='auto'?CATS[i.cat].ko:'사진에서 판단'}
+- 분위기: ${TONES[i.tone||'luxury'].ko}
+- 판매가: ${P.price?won(P.price):'미입력'}
+- 소재·순도: ${i.material||'미입력'}
+- 옵션·사이즈: ${P.options||'미입력'}
+- 메모: ${i.memo||'없음'}
+
+[작성 원칙]
+1. 사진에서 확실히 보이는 특징(형태, 색, 체인/밴드 모양, 장식, 스톤의 색)만 단정적으로 쓰세요.
+2. 순도(14K·925 등), 중량, 제조국, 제조자, 보증서, 알레르기 관련 사실, 정확한 치수처럼 사진으로 알 수 없는 정보는 판매자 입력이 있으면 그대로 쓰고, 없으면 정확히 "${VF}"라고 쓰세요.
+3. "최고", "100% 무알러지", "평생 변색 없음" 같은 과장·허위 표현과 건강·효능 주장은 쓰지 마세요.
+4. 문장은 자연스럽고 따뜻한 한국어 판매 카피로, 존댓말을 쓰세요.
+5. 다음 표현은 절대 쓰지 마세요: 가짜, 짝퉁, 카피, 레플리카, 이미테이션, 모조, 미러급, 정품급, "OOst"·"OO스타일"처럼 명품을 연상시키는 표현, 모든 명품·타사 브랜드명(샤넬, 티파니, 까르띠에, 반클리프, 불가리, 스와로브스키, 판도라 등), 최고·최상·최저가·1위·100%·완벽·평생·영구·무알러지·변색 없음, 건강·치료 등 효능 주장.
+6. 반드시 아래 JSON 형식만 출력하세요. 다른 말은 쓰지 마세요.
+
+{
+ "category": "ring | bracelet | necklace | earring | other 중 하나",
+ "observed": {"metal_look":"예: 옐로우 골드 톤","metal_en":"영문 대문자 2~3단어, 예: YELLOW GOLD","stones":"보이는 장식/스톤","design":"디자인 특징 한 문장","colors":"주요 색상","style_keywords":["키워드 4개"]},
+ "image_subject": "이미지 생성용 영어 설명. 제품을 정확히 묘사하는 한 구절. 예: delicate yellow-gold paperclip chain bracelet with one small freshwater pearl charm",
+ "names": [{"ko":"감성적인 한국어 상품명","en":"영문 상품명","concept":"이름의 의미 한 줄"}] (5개, 서로 다른 느낌),
+ "catchphrase": "상세페이지 첫 화면 캐치프레이즈 (20자 내외)",
+ "subcopy": "캐치프레이즈 아래 2문장",
+ "summary": "제품 소개 2~3문장",
+ "points_title": "포인트 섹션 제목",
+ "points": [{"title":"포인트 제목(12자 내외)","desc":"1~2문장","desc_long":"3~4문장 자세한 설명"}] (4개),
+ "story_title": "스토리 섹션 제목",
+ "story": ["문단1","문단2","문단3"],
+ "wear_title": "착용 섹션 제목",
+ "styling": [{"title":"코디 제목","desc":"1~2문장"}] (3개),
+ "occasions": ["추천 상황이나 선물 대상"] (6개),
+ "quality": [{"label":"소재","value":""},{"label":"컬러","value":""},{"label":"장식·스톤","value":""},{"label":"사이즈","value":""},{"label":"중량","value":""},{"label":"잠금·마감","value":""},{"label":"구성","value":""}],
+ "quality_promises": [{"title":"검수/품질 약속 제목","desc":"1~2문장, 판매자가 지킬 수 있는 일반적 약속"}] (3개),
+ "care": ["보관·관리법 한 문장"] (5개),
+ "packaging": "포장 안내 1~2문장 (일반적인 선물 포장 기준, 확실치 않은 구성품은 ${VF})",
+ "size_note": "사이즈 선택 도움말 1~2문장",
+ "faq": [{"q":"질문","a":"답변"}] (5개),
+ "notice": {"소재 / 순도 / 밴드재질":"","중량":"","제조자 / 수입자":"","제조국":"","치수":"","착용 시 주의사항":"","귀금속·보석류 등급":"","기능 / 방수 등":"","보증서 제공 여부":"","A/S 책임자와 전화번호":""},
+ "seo": {"title_smartstore":"스마트스토어 상품명 50자 이내 (핵심 검색어 포함)","title_coupang":"쿠팡 노출 상품명","tags":["검색 태그"] (10개),"hashtags":["#해시태그"] (15개),"insta_caption":"인스타그램 게시글 4~6줄 (이모지 1~3개 허용)","short_ad":"광고용 한 줄 문구"}
+}`}
+function parseJSON(t){t=String(t||'').trim().replace(/^```(?:json)?\s*/i,'').replace(/```\s*$/,'');const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<0)throw Error('AI 응답을 해석하지 못했어요. 다시 시도해 주세요.');return JSON.parse(t.slice(a,b+1))}
+async function analyze(){const dataURL=await blobToDataURL(await toJpeg(blobs.original,1024,.88));const msgs=[{role:'system',content:'당신은 한국 온라인 주얼리 쇼핑몰 전문 MD이자 카피라이터입니다. 사실에 근거해 판매용 콘텐츠를 JSON으로만 출력합니다.'},{role:'user',content:[{type:'text',text:analyzePrompt()},{type:'image_url',image_url:{url:dataURL,detail:'high'}}]}];
+ let last='';
+ for(const model of TEXT_MODELS){for(const rf of [true,false]){try{const body={model,messages:msgs,max_tokens:6000};if(rf)body.response_format={type:'json_object'};const r=await fetchT(API+'/v1/chat/completions',{method:'POST',headers:{...auth(),'Content-Type':'application/json'},body:JSON.stringify(body)},150000);
+  if(r.status===401)throw Object.assign(Error('AI 연결이 만료됐어요. 다시 연결해 주세요.'),{fatal:true});if(r.status===402)throw Object.assign(Error('Pollen 잔액 또는 승인 예산이 부족해요.'),{fatal:true});
+  if(!r.ok){last=(await r.text()).slice(0,200);continue}const j=await r.json();const txt=j.choices?.[0]?.message?.content;const data=parseJSON(Array.isArray(txt)?txt.map(x=>x.text||'').join(''):txt);return data}catch(e){if(e.fatal)throw e;last=safeErr(e)}}}
+ throw Error('AI 글 작성에 실패했어요. '+last)}
+function applyAI(a){P.ai=normalizeAI(a);const ic=P.input?.cat;P.category=ic&&ic!=='auto'?ic:(CATS[a.category]?a.category:'other');if(!P.name||P.autoName!==false){P.name=a.names?.[0]?.ko||P.name||'';P.nameEn=a.names?.[0]?.en||''}P.theme=TONES[P.input?.tone||'luxury'].theme;const sn=sanitizeProduct(P);if(sn.n)setTimeout(()=>toast('판매 금지·주의 표현 '+sn.n+'곳을 자동으로 정리했어요.',4000),1500)}
+function normalizeAI(a){a=a||{};const arr=v=>Array.isArray(v)?v:[];a.names=arr(a.names);a.points=arr(a.points);a.story=arr(a.story).filter(Boolean);a.styling=arr(a.styling);a.occasions=arr(a.occasions);a.quality=arr(a.quality);a.quality_promises=arr(a.quality_promises);a.care=arr(a.care);a.faq=arr(a.faq);a.notice=a.notice&&typeof a.notice==='object'?a.notice:{};a.seo=a.seo||{};a.seo.tags=arr(a.seo.tags);a.seo.hashtags=arr(a.seo.hashtags);a.observed=a.observed||{};return a}
+function manualAI(cat){const c=CATS[cat]||CATS.other;return normalizeAI({category:cat,observed:{metal_look:'',metal_en:'',style_keywords:[]},image_subject:c.en.toLowerCase(),names:[{ko:'새 '+c.ko,en:'New '+c.en.toLowerCase(),concept:''}],catchphrase:'일상에 스며드는 작은 빛',subcopy:'매일 손이 가는 디자인으로, 어떤 옷차림에도 자연스럽게 어울립니다.',summary:'제품 소개를 입력해 주세요.',points_title:'이 주얼리를 선택해야 하는 이유',points:[{title:'섬세한 디자인',desc:'포인트 설명을 입력하세요.'},{title:'편안한 착용감',desc:'포인트 설명을 입력하세요.'},{title:'데일리 매치',desc:'포인트 설명을 입력하세요.'},{title:'선물 추천',desc:'포인트 설명을 입력하세요.'}],story_title:'당신의 일상에 머무는 작은 빛',story:['스토리를 입력하세요.'],wear_title:'착용했을 때 더 아름다운',styling:[{title:'데일리 룩',desc:'코디 팁을 입력하세요.'}],occasions:['생일 선물','기념일','데일리'],quality:[{label:'소재',value:P.input?.material||VF},{label:'사이즈',value:P.options||VF},{label:'중량',value:VF}],quality_promises:[{title:'출고 전 검수',desc:'광택, 장식, 잠금 상태를 하나하나 확인한 뒤 보내드립니다.'}],care:['착용 후 부드러운 천으로 닦아 지퍼백에 보관해 주세요.','향수·로션·물기가 닿지 않게 해 주세요.','운동, 샤워, 수영 시에는 빼 두세요.'],packaging:'선물하기 좋은 케이스에 담아 보내드립니다.',size_note:'',faq:[{q:'선물 포장이 되나요?',a:'기본 케이스에 담아 보내드립니다.'}],notice:{'소재 / 순도 / 밴드재질':P.input?.material||VF,'중량':VF,'제조자 / 수입자':VF,'제조국':VF,'치수':P.options||VF,'착용 시 주의사항':'물, 땀, 화장품 접촉 시 변색될 수 있습니다.','귀금속·보석류 등급':'해당 없음','기능 / 방수 등':'방수 기능 없음','보증서 제공 여부':VF,'A/S 책임자와 전화번호':VF},seo:{title_smartstore:'',title_coupang:'',tags:[],hashtags:[],insta_caption:'',short_ad:''}})}
+
+/* ───────── 이미지 생성 ───────── */
+function shotPrompt(key){const c=P.category,a=P.ai||{},o=a.observed||{},t=TONES[P.input?.tone||'luxury'];const item=(a.image_subject||`${o.metal_look||''} ${CATS[c]?.en.toLowerCase()||'jewelry'}`).trim();
+ const wear={necklace:`Close-up photo of a woman's neckline and collarbone wearing this ${item}, cropped from the chin down so no face is visible, simple ${t.palette} top, soft natural daylight, elegant lifestyle jewelry photography, realistic skin texture.`,
+  earring:`Close-up side photo of a woman's ear wearing this ${item}, hair tucked behind the ear, face mostly out of frame, soft natural daylight, elegant lifestyle jewelry photography, realistic skin texture.`,
+  bracelet:`Close-up photo of a woman's wrist and hand wearing this ${item}, natural nude manicure, soft knit sleeve in ${t.palette} tones, natural daylight, elegant lifestyle jewelry photography, realistic skin texture.`,
+  ring:`Close-up photo of a woman's hand wearing this ${item} on her ring finger, natural nude manicure, graceful relaxed pose, soft natural daylight, elegant lifestyle jewelry photography, realistic skin texture.`,
+  other:`Close-up photo of a woman wearing this ${item}, face not visible, soft natural daylight, elegant lifestyle jewelry photography, realistic skin texture.`};
+ const scene={packshot:`Professional e-commerce product photo of this ${item} alone on a pure white seamless background, centered with generous margin, soft even studio lighting, subtle natural contact shadow, tack-sharp focus, true-to-life color, high-end jewelry catalog.`,
+  styled:`Luxury editorial still-life photo of this ${item} resting on ${t.surface}, soft natural window light, gentle shadows, shallow depth of field, ${t.palette} color palette, premium jewelry brand photography.`,
+  wear:wear[c]||wear.other,
+  macro:`Extreme macro close-up photo of this ${item}, showing fine craftsmanship, polished surfaces, stone setting and clasp details, soft ${t.palette} gradient background, studio lighting with delicate sparkling highlights, ultra sharp focus.`,
+  lifestyle:`Lifestyle photo of this ${item} placed on a cozy cafe table beside a latte cup and a small bouquet of flowers, warm afternoon sunlight, soft bokeh, aspirational everyday mood.`,
+  gift:`This ${item} presented in an open premium jewelry gift box with a satin ribbon, ${t.palette} tones, soft light, romantic gift concept, the jewelry clearly visible.`,
+  hero:`Cinematic luxury campaign photo of this ${item} as the hero on ${t.surface}, elegant dramatic lighting with soft glow and sparkle, ${t.palette} palette, clean minimal composition, magazine-cover quality.`}[key];
+ return `${scene} Use the jewelry in the reference image as the exact product: keep the identical design, shape, proportions, metal color, chain or band, stones and every detail. Do not redesign or recolor it and do not add other jewelry. Photorealistic, no text, no watermark, no logo.`}
+async function sourceUrl(){if(P.sourceUrl&&Date.now()-(P.sourceUrlAt||0)<20*864e5)return P.sourceUrl;const fd=new FormData();fd.append('file',blobs.original,'product.jpg');const r=await fetchT(MEDIA+'/upload',{method:'POST',headers:auth(),body:fd},60000);if(!r.ok)throw Error('원본 사진 업로드 실패 ('+r.status+')');const j=await r.json();P.sourceUrl=j.url;P.sourceUrlAt=Date.now();await save();return j.url}
+async function imageEdit(prompt,model,w,h){let last='';
+ try{const fd=new FormData();fd.append('image',blobs.original,'product.jpg');fd.append('prompt',prompt);fd.append('model',model);fd.append('size',w+'x'+h);fd.append('n','1');
+  const r=await fetchT(API+'/v1/images/edits',{method:'POST',headers:auth(),body:fd},240000);
+  if(r.status===401)throw Object.assign(Error('AI 연결이 만료됐어요. 다시 연결해 주세요.'),{fatal:true});if(r.status===402)throw Object.assign(Error('Pollen 잔액 또는 승인 예산이 부족해요. (고품질 모델은 유료 Pollen 필요)'),{fatal:true});
+  if(r.ok){const j=await r.json();const d=j.data?.[0];if(d?.b64_json)return b64ToBlob(d.b64_json);if(d?.url){const ir=await fetch(d.url);if(ir.ok)return await ir.blob()}last='빈 응답'}else last=r.status+' '+(await r.text()).slice(0,160)}catch(e){if(e.fatal)throw e;last=safeErr(e)}
+ const url=await sourceUrl();const q=new URLSearchParams({model,width:w,height:h,image:url,nologo:'true',seed:String(Math.floor(Math.random()*2e9))});
+ const r2=await fetchT(API+'/image/'+encodeURIComponent(prompt)+'?'+q,{headers:auth()},240000);
+ if(r2.status===402)throw Object.assign(Error('Pollen 잔액 또는 승인 예산이 부족해요.'),{fatal:true});
+ if(!r2.ok)throw Error('이미지 생성 실패 ('+r2.status+') '+last.slice(0,80));const b=await r2.blob();if(!/^image\//.test(b.type)&&b.size<2000)throw Error('이미지가 아닌 응답');return b}
+const shotState={};
+async function genShot(key){const s=SHOTS.find(x=>x.key===key);const model=selModel();shotState[key]={st:'loading'};renderShotCard(key);
+ try{const b=await imageEdit(shotPrompt(key),model,s.w,s.h);await setBlob(key,b);P.shots[key]={model,at:Date.now()};await save();shotState[key]={st:'done'}}catch(e){shotState[key]={st:'error',msg:safeErr(e)};if(e.fatal)throw e}finally{renderShotCard(key)}}
+async function genMany(keys,onDone){let i=0,done=0,fatal=null;const worker=async()=>{while(i<keys.length&&!fatal){const k=keys[i++];try{await genShot(k)}catch(e){fatal=e}done++;onDone&&onDone(done,keys.length)}};await Promise.all([worker(),worker()]);readBalance();if(fatal)throw fatal}
+
+/* ───────── 전체 실행 ───────── */
+function pstep(s,state){const el=$(`.pstep[data-s="${s}"]`);el.className='pstep '+(state||'');el.querySelector('i').textContent=state==='done'?'✓':state==='err'?'!':''}
+$('#runAll').onclick=async()=>{if(!P||!blobs.original)return;if(needAuth())return;readInputs();running=true;updateButtons();$('#progress').classList.add('show');['analyze','images','detail'].forEach(s=>pstep(s,''));
+ try{pstep('analyze','run');const a=await analyze();P.autoName=true;applyAI(a);await save();pstep('analyze','done');
+  pstep('images','run');const keys=SHOTS.map(s=>s.key);$('#imgCount').textContent='(0/'+keys.length+')';
+  try{await genMany(keys,(d,n)=>$('#imgCount').textContent='('+d+'/'+n+')')}catch(e){pstep('images','err');toast(safeErr(e),5000)}
+  const fails=SHOTS.filter(s=>shotState[s.key]?.st==='error').length;if(!$('.pstep[data-s="images"]').classList.contains('err'))pstep('images',fails?'err':'done');if(fails)$('#imgCount').textContent+=` · ${fails}장 실패(03 단계에서 다시 만들기)`;
+  pstep('detail','run');await save();pstep('detail','done');toast('완성! 상세페이지를 확인하세요.');go('detail')}
+ catch(e){pstep('analyze','err');toast(safeErr(e),6000)}finally{running=false;updateButtons()}};
+$('#manualBtn').onclick=async()=>{if(!P)return;readInputs();const cat=P.input.cat!=='auto'?P.input.cat:'other';P.category=cat;if(!P.ai)P.ai=manualAI(cat);if(!P.name){P.name=P.ai.names[0].ko;P.nameEn=P.ai.names[0].en}P.theme=TONES[P.input.tone||'luxury'].theme;await save();toast('기본 틀을 만들었어요. 내용을 수정해 주세요.');go('info')};
+$('#reAnalyze').onclick=async()=>{if(!P||!blobs.original){toast('먼저 사진을 올려주세요.');return}if(needAuth())return;if(P.ai&&!confirm('AI가 글을 새로 작성합니다. 직접 고친 내용은 사라져요. 계속할까요?'))return;busy(true,'AI가 사진을 분석해 글을 쓰는 중… (30초~1분)');try{readInputs();P.autoName=true;applyAI(await analyze());await save();renderEditor();toast('새로 작성했어요.')}catch(e){toast(safeErr(e),5000)}finally{busy(false)}};
+
+/* ───────── 금지 표현 필터 (가짜·카피·브랜드·과장·효능) ───────── */
+const BRANDS='샤넬|루이\\s?비통|에르메스|구찌|디올|티파니|까르띠에|카르티에|불가리|반\\s?클리프|쇼파드|프라다|셀린느|생\\s?로랑|입생로랑|펜디|미우미우|발렌시아가|보테가\\s?베네타|보테가|스와로브스키|판도라|다미아니|부쉐론|피아제|그라프|해리\\s?윈스턴|메시카|비비안\\s?웨스트우드|롤렉스|골든듀|제이에스티나|스톤헨지|디디에\\s?두보|아가타|chanel|louis\\s?vuitton|herm[eè]s|gucci|dior|tiffany|cartier|bvlgari|bulgari|van\\s?cleef(?:\\s?&\\s?arpels)?|chopard|prada|celine|saint\\s?laurent|ysl|fendi|miu\\s?miu|balenciaga|bottega(?:\\s?veneta)?|swarovski|pandora|damiani|boucheron|piaget|graff|harry\\s?winston|messika|vivienne\\s?westwood|rolex';
+const BAN_RULES=[
+ {cat:'명품·타사 브랜드명',re:new RegExp('(?:'+BRANDS+')(?:\\s?(?:st|스타일|느낌|풍|디자인|감성|무드|라인))?','gi'),rep:''},
+ {cat:'가짜·카피 등 모조 암시',re:/가짜|짝퉁|카피(?:\s?(?:제품|상품|디자인))?|레플리카|레플|이미테이션|모조품?|위조품?|미러급|정품급|정품\s?(?:과|이랑|와)?\s?동일|오마주|[가-힣]+\s?st(?![A-Za-z])/gi,rep:''},
+ {cat:'과장·허위 표현',re:/최고급|최상급/g,rep:'고급'},
+ {cat:'과장·허위 표현',re:/최고의|최상의/g,rep:'좋은'},
+ {cat:'과장·허위 표현',re:/최저가/g,rep:'합리적인 가격'},
+ {cat:'과장·허위 표현',re:/(?:업계|판매|국내)?\s?(?:1위|1등(?!급)|넘버원|No\.?\s?1(?!\d))/gi,rep:''},
+ {cat:'과장·허위 표현',re:/100\s?%/g,rep:''},
+ {cat:'과장·허위 표현',re:/완벽하게/g,rep:'꼼꼼하게'},
+ {cat:'과장·허위 표현',re:/완벽한/g,rep:'섬세한'},
+ {cat:'과장·허위 표현',re:/평생|영구적(?:인|으로)?|영구히/g,rep:'오래'},
+ {cat:'과장·허위 표현',re:/무\s?(?:알러지|알레르기)|(?:알러지|알레르기)\s?(?:걱정\s?)?(?:없는|없이|제로|zero)/gi,rep:''},
+ {cat:'과장·허위 표현',re:/변색\s?(?:걱정\s?)?(?:없는|없이|제로|zero|안 되는|되지 않는)/gi,rep:''},
+ {cat:'과장·허위 표현',re:/절대(?:로)?/g,rep:''},
+ {cat:'효능·의학적 주장',re:/혈액\s?순환|디톡스|면역력?|음이온|원적외선|치료|치유|건강에\s?좋은/g,rep:''}];
+function walkStrings(o,fn){if(typeof o==='string')return fn(o);if(Array.isArray(o))return o.map(v=>walkStrings(v,fn));if(o&&typeof o==='object'){const r={};for(const[k,v]of Object.entries(o))r[k]=walkStrings(v,fn);return r}return o}
+function findBanned(p){const hits=[];const scan=s=>{for(const r of BAN_RULES){const m=String(s).match(r.re);if(m)m.forEach(w=>{w=w.trim();if(w)hits.push({cat:r.cat,w})})}return s};scan(p.name||'');scan(p.nameEn||'');if(p.ai)walkStrings(p.ai,scan);return hits}
+function cleanStr(s){let o=s;for(const r of BAN_RULES)o=o.replace(r.re,r.rep);if(o===s)return s;return o.replace(/[ \t]{2,}/g,' ').replace(/\s+([,.!?)…])/g,'$1').replace(/\(\s*\)/g,'').replace(/^[\s,.]+|\s+$/g,'')}
+function sanitizeProduct(p){const n=findBanned(p).length;if(n){p.name=cleanStr(p.name||'');p.nameEn=cleanStr(p.nameEn||'');if(p.ai)p.ai=walkStrings(p.ai,cleanStr)}return{p,n}}
+function ensureClean(){if(!P)return true;const h=findBanned(P);if(!h.length)return true;const list=[...new Set(h.map(x=>x.w))].slice(0,12).join(', ');if(!confirm(`판매 금지·주의 표현 ${h.length}곳이 있어요: ${list}\n\n자동으로 정리한 뒤 저장할까요? (취소하면 저장하지 않아요)`))return false;sanitizeProduct(P);save();toast('금지 표현을 정리했어요. 문장이 자연스러운지 02 단계에서 확인해 주세요.',4000);if(curTab==='info')renderEditor();return true}
+
+/* ───────── 02 편집기 ───────── */
+const FIELDS=[
+ {k:'catchphrase',label:'캐치프레이즈',t:'text'},{k:'subcopy',label:'서브 카피',t:'area'},{k:'summary',label:'제품 소개',t:'area'},
+ {k:'points_title',label:'포인트 섹션 제목',t:'text'},{k:'points',label:'핵심 포인트',t:'pairs',a:'title',b:'desc'},
+ {k:'story_title',label:'스토리 제목',t:'text'},{k:'story',label:'상품 스토리 (문단은 빈 줄로 구분)',t:'paras'},
+ {k:'quality',label:'품질·스펙 표',t:'pairs',a:'label',b:'value'},{k:'quality_promises',label:'품질 약속·검수',t:'pairs',a:'title',b:'desc'},
+ {k:'wear_title',label:'착용 섹션 제목',t:'text'},{k:'styling',label:'스타일링 팁',t:'pairs',a:'title',b:'desc'},
+ {k:'occasions',label:'추천 상황·선물 대상 (한 줄에 하나)',t:'lines'},{k:'size_note',label:'사이즈 도움말',t:'area'},
+ {k:'care',label:'보관·관리법 (한 줄에 하나)',t:'lines'},{k:'packaging',label:'포장 안내',t:'area'},
+ {k:'faq',label:'자주 묻는 질문',t:'pairs',a:'q',b:'a'},{k:'notice',label:'상품정보제공고시 (귀금속·보석·시계류)',t:'kv'},
+ {k:'seo.title_smartstore',label:'스마트스토어 상품명 (50자 이내)',t:'text'},{k:'seo.title_coupang',label:'쿠팡 노출 상품명',t:'text'},
+ {k:'seo.tags',label:'검색 태그 (쉼표로 구분)',t:'csv'},{k:'seo.hashtags',label:'해시태그 (쉼표로 구분)',t:'csv'},
+ {k:'seo.insta_caption',label:'인스타그램 캡션',t:'area'},{k:'seo.short_ad',label:'광고 문구',t:'text'}];
+function verifyCount(){return P&&P.ai?(JSON.stringify(P.ai).match(/판매자 확인 필요/g)||[]).length:0}
+function renderVerify(){const n=verifyCount();const h=P?findBanned(P):[];let out='';if(h.length){const byCat={};h.forEach(x=>{(byCat[x.cat]=byCat[x.cat]||new Set()).add(x.w)});out+=`<div class="warn" style="background:#fdecea;border-color:#f3c2bb;color:#8c2f22">⛔ 판매 금지·주의 표현 <b>${h.length}곳</b>이 있어요. (가짜·카피 등 모조 암시, 브랜드명, 과장·효능 표현은 플랫폼 제재·법적 문제가 될 수 있어요)<br>${Object.entries(byCat).map(([c,s])=>'· '+esc(c)+': '+esc([...s].join(', '))).join('<br>')}<br><button class="btn sm" id="fixBan" style="margin-top:8px">자동 정리하기</button></div>`}if(n)out+=`<div class="warn">⚠ 사진만으로 알 수 없는 정보 <b>${n}곳</b>이 “판매자 확인 필요”로 표시돼 있어요. 실제 정보로 바꿔야 상세페이지의 빨간 표시가 사라집니다. (소재·순도, 중량, 제조국, A/S 연락처 등은 법정 표시 항목이에요)</div>`;$('#verifyWarn').innerHTML=out;const fb=$('#fixBan');if(fb)fb.onclick=()=>{sanitizeProduct(P);save();renderEditor();toast('정리했어요. 문장이 자연스러운지 확인해 주세요.')}}
+function renderEditor(){const ed=$('#editor');if(!P||!P.ai){ed.innerHTML='<div class="empty">먼저 01 단계에서 사진을 올리고 “AI로 전부 만들기” 또는 “직접 작성하기”를 눌러주세요.</div>';$('#verifyWarn').innerHTML='';return}
+ renderVerify();const a=P.ai;let h=`<div class="form" style="margin-bottom:18px"><label class="f">상품명<input type="text" id="edName" value="${esc(P.name)}"></label><label class="f">영문명<input type="text" id="edNameEn" value="${esc(P.nameEn)}"></label>
+ <div class="full"><div class="cost">AI 상품명 후보 (눌러서 선택)</div><div class="chips">${a.names.map((n,i)=>`<button class="chip ${n.ko===P.name?'on':''}" data-n="${i}" title="${esc(n.concept||'')}">${esc(n.ko)}</button>`).join('')}</div></div>
+ <label class="f">종류<select id="edCat">${Object.entries(CATS).map(([k,v])=>`<option value="${k}" ${k===P.category?'selected':''}>${v.ko}</option>`).join('')}</select></label>
+ <label class="f">판매가 / 정가<div class="row" style="flex-wrap:nowrap"><input type="number" id="edPrice" value="${esc(P.price)}" placeholder="판매가"><input type="number" id="edList" value="${esc(P.listPrice)}" placeholder="정가"></div></label>
+ <label class="f">옵션·사이즈 (쉼표 구분)<input type="text" id="edOpt" value="${esc(P.options)}"></label>
+ <label class="f">외부 구매 링크 <span class="s">스마트스토어·쿠팡 등 (선택)</span><input type="url" id="edStore" value="${esc(P.storeUrl)}" placeholder="https://"></label></div>`;
+ for(const f of FIELDS){const v=getPath(a,f.k);h+=`<div class="grp" data-k="${f.k}"><label>${esc(f.label)}</label>`;
+  if(f.t==='text')h+=`<input type="text" data-f="${f.k}" value="${esc(v)}">`;
+  else if(f.t==='area')h+=`<textarea data-f="${f.k}">${esc(v)}</textarea>`;
+  else if(f.t==='paras')h+=`<textarea data-f="${f.k}" style="min-height:160px">${esc((v||[]).join('\n\n'))}</textarea>`;
+  else if(f.t==='lines')h+=`<textarea data-f="${f.k}">${esc((v||[]).join('\n'))}</textarea>`;
+  else if(f.t==='csv')h+=`<input type="text" data-f="${f.k}" value="${esc((v||[]).join(', '))}">`;
+  else if(f.t==='pairs'){h+=`<div class="pairs">${(v||[]).map((r,i)=>`<div class="pair" data-i="${i}"><input type="text" data-a value="${esc(r[f.a])}"><textarea data-b>${esc(r[f.b])}</textarea><button class="x" data-del title="삭제">✕</button></div>`).join('')}</div><button class="btn ghost sm" data-add>+ 추가</button>`}
+  else if(f.t==='kv'){h+=`<div class="pairs">${Object.entries(v||{}).map(([kk,vv],i)=>`<div class="pair" data-i="${i}"><input type="text" data-a value="${esc(kk)}"><textarea data-b>${esc(vv)}</textarea><button class="x" data-del title="삭제">✕</button></div>`).join('')}</div><button class="btn ghost sm" data-add>+ 추가</button>`}
+  h+='</div>'}
+ ed.innerHTML=h;
+ $('#edName').oninput=e=>{P.name=e.target.value;P.autoName=false;saveSoon()};$('#edNameEn').oninput=e=>{P.nameEn=e.target.value;saveSoon()};
+ $('#edCat').onchange=e=>{P.category=e.target.value;saveSoon()};$('#edPrice').oninput=e=>{P.price=e.target.value;$('#inPrice').value=P.price;saveSoon()};$('#edList').oninput=e=>{P.listPrice=e.target.value;$('#inList').value=P.listPrice;saveSoon()};
+ $('#edOpt').oninput=e=>{P.options=e.target.value;$('#inOpt').value=P.options;saveSoon()};$('#edStore').oninput=e=>{P.storeUrl=e.target.value.trim();saveSoon()};
+ ed.querySelectorAll('.chip[data-n]').forEach(c=>c.onclick=()=>{const n=a.names[+c.dataset.n];P.name=n.ko;P.nameEn=n.en||'';P.autoName=false;save();renderEditor()});
+ ed.querySelectorAll('[data-f]').forEach(el=>el.oninput=()=>{const f=FIELDS.find(x=>x.k===el.dataset.f);let v=el.value;if(f.t==='paras')v=v.split(/\n\s*\n/).map(s=>s.trim()).filter(Boolean);if(f.t==='lines')v=v.split('\n').map(s=>s.trim()).filter(Boolean);if(f.t==='csv')v=v.split(/[,，]/).map(s=>s.trim()).filter(Boolean);setPath(a,f.k,v);saveSoon();if(/확인/.test(el.value)||true)renderVerifyLater()});
+ ed.querySelectorAll('.grp').forEach(g=>{const f=FIELDS.find(x=>x.k===g.dataset.k);if(f.t!=='pairs'&&f.t!=='kv')return;const sync=()=>{const rows=[...g.querySelectorAll('.pair')].map(p=>[p.querySelector('[data-a]').value,p.querySelector('[data-b]').value]);if(f.t==='pairs')setPath(a,f.k,rows.map(([x,y])=>({[f.a]:x,[f.b]:y})));else setPath(a,f.k,Object.fromEntries(rows.filter(r=>r[0].trim())));saveSoon();renderVerifyLater()};
+  g.addEventListener('input',sync);g.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{b.parentElement.remove();sync()});g.querySelector('[data-add]').onclick=()=>{const v=getPath(a,f.k);if(f.t==='pairs'){v.push({[f.a]:'',[f.b]:''})}else{v['새 항목 '+(Object.keys(v).length+1)]=''}save();renderEditor()}})}
+let rvT;function renderVerifyLater(){clearTimeout(rvT);rvT=setTimeout(renderVerify,600)}
+
+/* ───────── 03 이미지 카드 ───────── */
+function renderShots(){const box=$('#shots');if(!P||!blobs.original){box.innerHTML='<div class="empty" style="grid-column:1/-1">먼저 01 단계에서 사진을 올려주세요.</div>';return}
+ box.innerHTML=`<div class="shot"><div class="im"><img src="${urls.original}" alt=""></div><div class="meta"><b>원본 사진</b><small>업로드한 사진 · 모든 생성의 기준</small><div class="acts"><button class="btn ghost sm" onclick="dlOne('original')">다운로드</button><button class="btn ghost sm" onclick="$('#file').click()">교체</button></div></div></div>`+SHOTS.map(s=>`<div class="shot" id="shot-${s.key}"></div>`).join('');SHOTS.forEach(s=>renderShotCard(s.key))}
+function renderShotCard(key){const el=$('#shot-'+key);if(!el)return;const s=SHOTS.find(x=>x.key===key),st=shotState[key]||{};const has=!!urls[key];
+ el.innerHTML=`<div class="im">${st.st==='loading'?'<div class="spin"></div>':has?`<img src="${urls[key]}" alt="${esc(s.label)}">`:'아직 없음'}</div><div class="meta"><b>${esc(s.label)}</b><small>${esc(s.use)}</small>${st.st==='error'?`<span class="err">${esc(st.msg)}</span>`:''}
+ <label class="chk"><input type="checkbox" data-sel="${key}" ${has?'':'checked'}> 생성/다시 생성 대상</label>
+ <div class="acts"><button class="btn ghost sm" data-regen="${key}" ${st.st==='loading'?'disabled':''}>${has?'다시 만들기':'만들기'}</button>${has?`<button class="btn ghost sm" onclick="dlOne('${key}')">저장</button><button class="btn ghost sm" onclick="delShot('${key}')">삭제</button>`:''}<button class="btn ghost sm" onclick="replaceShot('${key}')">내 사진으로 교체</button></div></div>`;
+ el.querySelector('[data-regen]').onclick=async()=>{if(needAuth())return;try{await genShot(key);readBalance()}catch(e){toast(safeErr(e),5000)}}}
+async function dlOne(k){const b=blobs[k];if(!b)return;download(await toJpeg(b,2048,.93),fileSafe(P.name)+'_'+k+'.jpg')}
+async function delShot(k){if(!confirm('이 이미지를 삭제할까요?'))return;await removeBlob(k);delete shotState[k];renderShotCard(k)}
+let replaceKey=null;function replaceShot(k){replaceKey=k;$('#replaceFile').click()}
+$('#replaceFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f||!replaceKey)return;try{const b=await prepImage(f,2048);await setBlob(replaceKey,b);shotState[replaceKey]={st:'done'};renderShotCard(replaceKey);toast('교체했어요.')}catch(er){toast(safeErr(er))}};
+$('#genSel').onclick=async()=>{if(!P||!blobs.original){toast('먼저 사진을 올려주세요.');return}if(needAuth())return;if(!P.ai){toast('상품 정보가 없어 기본 설명으로 생성합니다.');P.ai=manualAI(P.category)}const keys=$$('[data-sel]:checked').map(c=>c.dataset.sel);if(!keys.length){toast('생성할 이미지를 체크해 주세요.');return}
+ $('#genSel').disabled=true;try{await genMany(keys);toast('이미지 생성이 끝났어요.')}catch(e){toast(safeErr(e),5000)}finally{$('#genSel').disabled=false}};
+$('#dlImgs').onclick=async()=>{if(!P)return;busy(true,'이미지 묶는 중…');try{const files=[];for(const k of ['original',...SHOTS.map(s=>s.key)])if(blobs[k])files.push({name:labelOf(k)+'.jpg',data:await toJpeg(blobs[k],2048,.93)});download(await makeZip(files),fileSafe(P.name)+'_판매이미지.zip')}finally{busy(false)}};
+function labelOf(k){return k==='original'?'00_원본':String(SHOTS.findIndex(s=>s.key===k)+1).padStart(2,'0')+'_'+SHOTS.find(s=>s.key===k).label.replace(/[()\s]+/g,'_').replace(/_+$/,'')}
+
+/* ───────── 상세페이지 템플릿 ───────── */
+function themeOf(p){return THEMES[p.theme]||THEMES.ivory}
+function dpCSS(t){return `.dp{--bg:${t.bg};--paper:${t.paper};--ink:${t.ink};--sub:${t.sub};--accent:${t.accent};--soft:${t.soft};width:860px;margin:0 auto;background:var(--bg);color:var(--ink);font-family:Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;overflow:hidden;-webkit-font-smoothing:antialiased}
+.dp *{box-sizing:border-box}.dp section{padding:96px 72px;position:relative}.dp .en{font-family:'Cormorant Garamond',serif;letter-spacing:.34em;font-size:16px;color:var(--accent);text-transform:uppercase;font-weight:700}
+.dp h2{font-family:'Gowun Batang',serif;font-size:38px;line-height:1.38;margin:14px 0 22px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}.dp p{font-size:19px;line-height:1.9;color:var(--sub);margin:0 0 16px}
+.dp img{display:block;width:100%;height:auto}.dp .center{text-align:center}.dp .top-bar{padding:26px 72px;display:flex;justify-content:space-between;font-family:'Cormorant Garamond',serif;letter-spacing:.3em;font-size:15px;font-weight:700;border-bottom:1px solid var(--soft);color:var(--ink)}
+.dp .hero{padding:0}.dp .hero-txt{padding:76px 72px 96px;text-align:center}.dp .hero-txt h1{font-family:'Gowun Batang',serif;font-size:54px;line-height:1.28;margin:18px 0 12px;letter-spacing:-.03em;color:var(--ink)}
+.dp .enname{font-family:'Cormorant Garamond',serif;font-size:25px;letter-spacing:.16em;color:var(--sub);font-weight:600}.dp .divider{width:1px;height:62px;background:var(--accent);margin:34px auto}
+.dp .catch{font-size:26px;color:var(--ink);font-family:'Gowun Batang',serif;line-height:1.6;margin-bottom:16px}.dp .hero-txt .sub{font-size:19px}
+.dp .alt{background:var(--paper)}.dp .points{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px;text-align:left}
+.dp .pt{background:var(--bg);border:1px solid var(--soft);border-radius:20px;padding:32px 30px}.dp .alt .pt{background:var(--bg)}.dp section:not(.alt) .pt{background:var(--paper)}
+.dp .pt .no{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--accent);font-weight:700;line-height:1}.dp .pt b{display:block;font-size:21px;margin:12px 0 8px;color:var(--ink)}.dp .pt span{font-size:16.5px;line-height:1.75;color:var(--sub);display:block}
+.dp .imgframe{border-radius:24px;overflow:hidden;margin:36px 0}.dp .feature{padding:0 0 90px}.dp .feature .txt{padding:54px 72px 0}.dp .feature .fimg img{width:100%}
+.dp table{width:100%;border-collapse:collapse;font-size:17px;margin-top:28px;background:var(--bg)}.dp th,.dp td{border-bottom:1px solid var(--soft);padding:18px 16px;text-align:left;vertical-align:top;line-height:1.65}
+.dp th{width:32%;color:var(--ink);font-weight:700;background:var(--paper)}.dp td{color:var(--sub)}.dp table tr:first-child th,.dp table tr:first-child td{border-top:2px solid var(--ink)}
+.dp .thead th{background:var(--ink);color:var(--bg);text-align:center;width:auto}.dp .sizet td{text-align:center}
+.dp .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px}.dp .chip{border:1px solid var(--accent);color:var(--accent);border-radius:99px;padding:10px 20px;font-size:16.5px;font-weight:600}
+.dp .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}.dp .grid2 img{border-radius:18px;aspect-ratio:1/1;object-fit:cover}
+.dp .qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}.dp .qgrid .pt{padding:26px 22px;text-align:center}.dp .qgrid .pt b{margin-top:4px}
+.dp .stl{display:grid;gap:14px;margin-top:34px;text-align:left}.dp .stl .pt{display:grid;grid-template-columns:70px 1fr;align-items:center;gap:10px}
+.dp ul.list{margin:26px 0 0;padding:0;list-style:none}.dp ul.list li{font-size:18px;line-height:1.75;color:var(--sub);padding:15px 0 15px 40px;border-bottom:1px solid var(--soft);position:relative}
+.dp ul.list li:before{content:'✦';position:absolute;left:6px;color:var(--accent)}
+.dp .faq{margin-top:26px}.dp .faq .qa{border-bottom:1px solid var(--soft);padding:24px 4px}.dp .faq .q{font-weight:700;font-size:19px;color:var(--ink)}.dp .faq .q:before{content:'Q. ';color:var(--accent);font-family:'Cormorant Garamond',serif;font-size:24px}
+.dp .faq .a{font-size:17.5px;color:var(--sub);line-height:1.8;margin-top:10px;padding-left:34px}
+.dp .dark{background:var(--ink);color:var(--bg)}.dp .dark h2{color:var(--bg)}.dp .dark p{color:var(--soft)}.dp .dark .pt{background:rgba(255,255,255,.06)!important;border-color:rgba(255,255,255,.14)}.dp .dark .pt b{color:var(--bg)}.dp .dark .pt span{color:var(--soft)}
+.dp .note{font-size:15.5px;color:var(--sub);margin-top:18px;line-height:1.7}.dp .opts{margin-top:22px;font-size:18px;color:var(--ink)}
+.dp .foot{padding:70px 72px;text-align:center;border-top:1px solid var(--soft)}.dp .foot .brand{font-family:'Cormorant Garamond',serif;font-size:30px;letter-spacing:.3em;font-weight:700;color:var(--ink)}
+.dp mark.vf{background:#ffe1dc;color:#c0392b;padding:1px 6px;border-radius:5px;font-size:.88em}`}
+function fmt(s){return esc(s).replace(/\[?판매자 확인 필요\]?/g,'<mark class="vf">판매자 확인 필요</mark>').replace(/\n/g,'<br>')}
+function sizeGuide(cat){
+ if(cat==='ring')return{title:'반지 사이즈(호수) 가이드',head:['호수','손가락 둘레','내경(지름)'],rows:[['5호','45mm','14.3mm'],['7호','47mm','15.0mm'],['9호','49mm','15.6mm'],['11호','51mm','16.2mm'],['13호','53mm','16.9mm'],['15호','55mm','17.5mm'],['17호','57mm','18.1mm'],['19호','59mm','18.8mm']],note:'실이나 종이띠로 손가락 둘레를 잰 뒤 가장 가까운 호수를 선택하세요. 마디가 굵다면 반 호수~한 호수 크게 고르시는 것을 권해 드려요.'};
+ if(cat==='bracelet')return{title:'팔찌 사이즈 가이드',head:['손목 둘레','추천 팔찌 길이','착용감'],rows:[['13~14cm','15cm','여유 있게'],['14~15cm','16cm','기본'],['15~16cm','17cm','기본'],['16~17cm','18cm','기본'],['17cm 이상','19cm 이상','여유 있게']],note:'줄자로 손목뼈 바로 위 둘레를 잰 뒤 1~1.5cm를 더한 길이가 가장 편안합니다.'};
+ if(cat==='necklace')return{title:'목걸이 길이 가이드',head:['길이','착용 위치','추천 코디'],rows:[['38~40cm','목선 가까이','라운드넥, 초커 느낌'],['42cm','쇄골 위','데일리 기본'],['45cm','쇄골 아래','브이넥, 셔츠'],['50cm','가슴 위','니트, 레이어드'],['60cm 이상','롱','겨울 니트, 포인트']],note:'체형과 목 둘레에 따라 실제 착용 위치는 조금 달라질 수 있어요.'};
+ if(cat==='earring')return{title:'귀걸이 정보',head:['항목','안내'],rows:[['전체 길이',VF],['침 굵기',VF],['잠금 방식',VF]],note:'귀가 예민하시다면 소재 정보를 꼭 확인해 주세요.'};
+ return{title:'사이즈 안내',head:['항목','안내'],rows:[['사이즈',VF]],note:''}}
+function dpBody(p,src,shop){const a=p.ai||normalizeAI({}),c=CATS[p.category]||CATS.other;const used=new Set();const S=k=>src(k)||'';
+ const pick=(...ks)=>{for(const k of ks){if(S(k)&&!used.has(k)){used.add(k);return S(k)}}return''};const I=u=>u?`<img src="${u}" alt="">`:'';const H=fmt;const out=[];
+ out.push(`<div class="top-bar"><span>${esc((shop.name||'JEWELRY STUDIO').toUpperCase())}</span><span>${c.en} COLLECTION</span></div>`);
+ if(S('wear'))used.add('wear');if(S('gift'))used.add('gift');
+ const heroU=pick('hero','styled','packshot','original');
+ out.push(`<section class="hero">${I(heroU)}<div class="hero-txt"><div class="en">${c.en}${a.observed?.metal_en?' · '+esc(a.observed.metal_en):''}</div><h1>${H(p.name||'상품명')}</h1>${p.nameEn?`<div class="enname">${esc(p.nameEn)}</div>`:''}<div class="divider"></div><div class="catch">${H(a.catchphrase)}</div><p class="sub">${H(a.subcopy)}</p></div></section>`);
+ if(a.summary||a.points.length)out.push(`<section class="alt center"><div class="en">Point</div><h2>${H(a.points_title||'이 주얼리를 선택해야 하는 이유')}</h2><p>${H(a.summary)}</p><div class="points">${a.points.slice(0,4).map((x,i)=>`<div class="pt"><div class="no">0${i+1}</div><b>${H(x.title)}</b><span>${H(x.desc)}</span></div>`).join('')}</div></section>`);
+ const storyU=pick('packshot','original');
+ if(a.story.length||storyU)out.push(`<section><div class="en center">Story</div><h2 class="center">${H(a.story_title||'당신의 일상에 머무는 작은 빛')}</h2>${storyU?`<div class="imgframe">${I(storyU)}</div>`:''}${a.story.map(s=>`<p>${H(s)}</p>`).join('')}</section>`);
+ a.points.slice(0,3).forEach((x,i)=>{const u=pick('macro','lifestyle','styled','hero','original');if(!u)return;out.push(`<section class="feature"><div class="fimg">${I(u)}</div><div class="txt"><div class="en">Point 0${i+1}</div><h2>${H(x.title)}</h2><p>${H(x.desc_long||x.desc)}</p></div></section>`)});
+ const stl=a.styling.length?`<div class="stl">${a.styling.map((x,i)=>`<div class="pt"><div class="no">${String(i+1).padStart(2,'0')}</div><div><b style="margin-top:0">${H(x.title)}</b><span>${H(x.desc)}</span></div></div>`).join('')}</div>`:'';
+ if(S('wear'))out.push(`<section class="dark center"><div class="en">On Body</div><h2>${H(a.wear_title||'착용했을 때 더 아름다운')}</h2><div class="imgframe">${I(S('wear'))}</div>${stl}</section>`);
+ else if(stl)out.push(`<section class="alt center"><div class="en">Styling</div><h2>${H(a.wear_title||'이렇게 연출해 보세요')}</h2>${stl}</section>`);
+ if(a.quality.length||a.quality_promises.length)out.push(`<section class="alt"><div class="en center">Quality</div><h2 class="center">꼼꼼하게 확인한 품질</h2>${a.quality.length?`<table>${a.quality.map(r=>`<tr><th>${H(r.label)}</th><td>${H(r.value)}</td></tr>`).join('')}</table>`:''}${a.quality_promises.length?`<div class="qgrid">${a.quality_promises.slice(0,3).map(q=>`<div class="pt"><div class="no">✓</div><b>${H(q.title)}</b><span>${H(q.desc)}</span></div>`).join('')}</div>`:''}</section>`);
+ const rest=['macro','lifestyle','styled','packshot','hero','original'].filter(k=>S(k)&&!used.has(k));
+ if(rest.length>=2)out.push(`<section class="center"><div class="en">Gallery</div><h2>다양한 각도에서 만나보세요</h2><div class="grid2">${rest.slice(0,4).map(k=>I(S(k))).join('')}</div></section>`);
+ const sg=sizeGuide(p.category);const opts=String(p.options||'').split(/[,，]/).map(s=>s.trim()).filter(Boolean);
+ out.push(`<section><div class="en center">Size Guide</div><h2 class="center">${esc(sg.title)}</h2><table class="sizet"><tr class="thead">${sg.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${sg.rows.map(r=>`<tr>${r.map(x=>`<td>${H(x)}</td>`).join('')}</tr>`).join('')}</table>${opts.length?`<div class="opts center">판매 옵션 : <b>${esc(opts.join(' / '))}</b></div>`:''}<p class="note center">${H(a.size_note||sg.note)}</p></section>`);
+ if(S('gift')||a.packaging||a.occasions.length)out.push(`<section class="alt center"><div class="en">Gift</div><h2>소중한 사람에게 건네는 선물</h2>${S('gift')?`<div class="imgframe">${I(S('gift'))}</div>`:''}<p>${H(a.packaging)}</p>${a.occasions.length?`<div class="chips">${a.occasions.map(o=>`<span class="chip">${H(o)}</span>`).join('')}</div>`:''}</section>`);
+ if(a.care.length)out.push(`<section><div class="en center">Care</div><h2 class="center">오래도록 반짝이게, 관리 방법</h2><ul class="list">${a.care.map(x=>`<li>${H(x)}</li>`).join('')}</ul></section>`);
+ if(a.faq.length)out.push(`<section class="alt"><div class="en center">FAQ</div><h2 class="center">자주 묻는 질문</h2><div class="faq">${a.faq.map(x=>`<div class="qa"><div class="q">${H(x.q)}</div><div class="a">${H(x.a)}</div></div>`).join('')}</div></section>`);
+ const nt=Object.entries(a.notice||{});if(nt.length)out.push(`<section><div class="en center">Information</div><h2 class="center">상품정보제공고시</h2><table>${nt.map(([k,v])=>`<tr><th>${H(k)}</th><td>${H(v)}</td></tr>`).join('')}</table></section>`);
+ out.push(`<section class="alt"><div class="en center">Delivery & Return</div><h2 class="center">배송 · 교환 · 반품 안내</h2><table>${shipRows(shop).map(([k,v])=>`<tr><th>${esc(k)}</th><td>${fmt(v)}</td></tr>`).join('')}</table></section>`);
+ out.push(`<div class="foot"><div class="brand">${esc((shop.name||'JEWELRY STUDIO').toUpperCase())}</div><p style="margin-top:14px">${esc(shop.tagline||'당신의 하루에 작은 빛을 더합니다.')}</p></div>`);
+ return `<div class="dp">${out.join('')}</div>`}
+function shipRows(s){const fee=+s.shipFee||0,free=+s.freeOver||0;return[['배송 방법',s.courier||'택배'],['배송비',(fee?won(fee)+(free?` (${won(free)} 이상 구매 시 무료)`:''):'무료 배송')+(s.extraFee?'\n도서·산간: '+s.extraFee:'')],['출고 안내',s.shipDays||'결제 확인 후 1~3 영업일 이내 출고됩니다. (주말·공휴일 제외)'],['출고지',(s.shipFrom||VF)+(s.shipFromTel?' / '+s.shipFromTel:'')],['교환·반품 기간','상품 수령 후 7일 이내 신청해 주세요.'],['교환·반품 배송비',s.returnFee||'단순 변심: 왕복 배송비 고객 부담 / 불량·오배송: 판매자 부담'],['반품지 (보내실 곳)',s.returnAddr?[s.returnName,s.returnAddr,s.returnTel].filter(Boolean).join(' / '):VF],['입고지',s.inboundAddr?s.inboundAddr+(s.inboundTel?' / '+s.inboundTel:''):(s.returnAddr?'반품지와 동일':VF)],['교환·반품 불가','착용 흔적이 있거나 상품·포장이 훼손된 경우, 각인 등 주문 제작 상품, 위생상 귀걸이 침이 사용된 경우'],['환불','반품 상품이 입고지에 도착해 확인된 날부터 3영업일 이내'],['문의',[s.phone,s.kakao?'카카오톡 채널':'',s.email].filter(Boolean).join(' · ')||VF]]}
+function detailDoc(p,src,shop){const t=themeOf(p);return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=860">${FONT_LINKS}<title>${esc(p.name)} 상세페이지</title><style>html,body{margin:0;background:${t.bg}}${dpCSS(t)}</style></head><body>${dpBody(p,src,shop)}</body></html>`}
+
+/* ───────── 04 상세페이지 미리보기/내보내기 ───────── */
+function fillThemes(){$('#theme').innerHTML=Object.entries(THEMES).map(([k,v])=>`<option value="${k}">${v.name}</option>`).join('');$('#theme').onchange=e=>{if(!P)return;P.theme=e.target.value;save();renderDetail()}}
+function srcLive(k){return urls[k]||''}
+let frameReady=null;
+function renderDetail(){const fr=$('#dpFrame');if(!P||!P.ai){fr.srcdoc='<p style="font-family:sans-serif;padding:40px;color:#888;text-align:center">먼저 01 단계에서 사진을 올리고 만들기를 눌러주세요.</p>';fitFrame(400);return}
+ $('#theme').value=P.theme||'ivory';frameReady=new Promise(res=>{fr.onload=()=>{const d=fr.contentDocument;const upd=()=>fitFrame(d.documentElement.scrollHeight);upd();d.querySelectorAll('img').forEach(i=>i.addEventListener('load',upd));if(d.fonts)d.fonts.ready.then(upd);setTimeout(upd,800);res()}});fr.srcdoc=detailDoc(P,srcLive,getShop())}
+function fitFrame(h){const fr=$('#dpFrame'),box=$('#pvbox'),wrap=$('#pvwrap');fr.style.height=h+'px';const cw=wrap.clientWidth-(parseFloat(getComputedStyle(wrap).paddingLeft)*2);const s=Math.min(1,cw/860);box.style.transform=`scale(${s})`;box.style.height=(h*s)+'px';box.style.marginLeft=s<1?'0':'auto'}
+window.addEventListener('resize',()=>{const d=$('#dpFrame').contentDocument;if(d&&d.documentElement)fitFrame(d.documentElement.scrollHeight)});
+async function loadH2C(w,d){if(w.html2canvas)return;await new Promise((res,rej)=>{const s=d.createElement('script');s.src=H2C;s.onload=res;s.onerror=()=>rej(Error('이미지 변환 도구를 불러오지 못했어요. 인터넷 연결을 확인하세요.'));d.head.appendChild(s)})}
+async function renderCanvas(scale=1){if(curTab!=='detail'||!frameReady)renderDetail();await frameReady;const fr=$('#dpFrame'),w=fr.contentWindow,d=fr.contentDocument;await loadH2C(w,d);if(d.fonts)await d.fonts.ready;await Promise.all([...d.images].map(i=>i.complete?0:new Promise(r=>{i.onload=i.onerror=r})));
+ const el=d.querySelector('.dp');const h=el.scrollHeight;let sc=scale;if(h*sc>32000)sc=32000/h;const cv=await w.html2canvas(el,{scale:sc,useCORS:true,backgroundColor:themeOf(P).bg,logging:false,windowWidth:860});
+ const tops=[...el.children].map(c=>Math.round(c.offsetTop*sc));return{cv,sc,tops}}
+function checkVerify(){const n=verifyCount();return !n||confirm(`“판매자 확인 필요” 표시가 ${n}곳 남아 있어요. 그대로 저장하면 빨간 표시가 이미지에 나옵니다.\n\n02 단계에서 고친 뒤 저장하는 걸 권해요. 그래도 저장할까요?`)}
+async function detailJpg(){const{cv}=await renderCanvas(1);return canvasBlob(cv,'image/jpeg',.9)}
+async function detailSplit(maxH=2400){const{cv,tops}=await renderCanvas(1);const cuts=[0];let last=0;for(const t of tops.concat(cv.height)){if(t-cuts.at(-1)>maxH&&last>cuts.at(-1))cuts.push(last);last=t}cuts.push(cv.height);const out=[];
+ for(let i=0;i<cuts.length-1;i++){const h=cuts[i+1]-cuts[i];if(h<4)continue;const c=document.createElement('canvas');c.width=cv.width;c.height=h;c.getContext('2d').drawImage(cv,0,cuts[i],cv.width,h,0,0,cv.width,h);out.push(await canvasBlob(c,'image/jpeg',.9))}return out}
+async function thumbs(){const out=[];for(const k of ['packshot','original','styled','wear','macro','lifestyle','gift','hero'])if(blobs[k])out.push({name:'thumb_'+labelOf(k)+'.jpg',data:await squareThumb(blobs[k],1000,k==='packshot'||k==='original')});return out}
+async function snsCard(){const t=themeOf(P);const W=1080,H=1350;const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const k=['styled','hero','wear','lifestyle','packshot','original'].find(k=>blobs[k]);const im=await loadBitmap(blobs[k]);
+ const s=Math.max(W/im.width,H/im.height);x.drawImage(im,(W-im.width*s)/2,(H-im.height*s)/2,im.width*s,im.height*s);const g=x.createLinearGradient(0,H*.5,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.72)');x.fillStyle=g;x.fillRect(0,0,W,H);
+ await Promise.all(['700 64px "Gowun Batang"','600 30px "Cormorant Garamond"','500 34px Pretendard','700 44px Pretendard'].map(f=>document.fonts.load(f,P.name+'가나다ABC').catch(()=>{})));
+ x.fillStyle='#fff';x.textAlign='left';x.font='600 30px "Cormorant Garamond", serif';x.fillText((getShop().name||'JEWELRY').toUpperCase().split('').join(' '),70,H-330);
+ x.font='700 64px "Gowun Batang", serif';wrapText(x,P.name||'',70,H-250,W-140,78,2);x.font='500 34px Pretendard, sans-serif';x.fillStyle='rgba(255,255,255,.88)';wrapText(x,P.ai?.catchphrase||'',70,H-110,W-140,46,1);
+ if(P.price){x.textAlign='right';x.font='700 44px Pretendard, sans-serif';x.fillStyle='#fff';x.fillText(won(P.price),W-70,H-60)}return canvasBlob(c,'image/jpeg',.92)}
+function wrapText(x,txt,X,Y,maxW,lh,maxL){const words=String(txt).split('');let line='',lines=[];for(const ch of words){const t=line+ch;if(x.measureText(t).width>maxW&&line){lines.push(line);line=ch}else line=t}if(line)lines.push(line);lines=lines.slice(0,maxL);const off=(lines.length-1)*lh;lines.forEach((l,i)=>x.fillText(l,X,Y-off+i*lh))}
+function textPack(){const a=P.ai||{},s=a.seo||{};const L=[];const sec=(t,v)=>{if(v&&String(v).trim())L.push('■ '+t,String(v).trim(),'')};
+ sec('상품명',P.name+(P.nameEn?' ('+P.nameEn+')':''));sec('상품명 후보',(a.names||[]).map(n=>`- ${n.ko} / ${n.en||''} : ${n.concept||''}`).join('\n'));sec('스마트스토어 상품명',s.title_smartstore);sec('쿠팡 상품명',s.title_coupang);sec('판매가',P.price?won(P.price):'');sec('옵션',P.options);
+ sec('검색 태그',(s.tags||[]).join(', '));sec('해시태그',(s.hashtags||[]).join(' '));sec('캐치프레이즈',a.catchphrase);sec('서브 카피',a.subcopy);sec('제품 소개',a.summary);sec('스토리',(a.story||[]).join('\n\n'));
+ sec('핵심 포인트',(a.points||[]).map((x,i)=>`${i+1}. ${x.title}\n   ${x.desc_long||x.desc}`).join('\n'));sec('품질·스펙',(a.quality||[]).map(r=>`- ${r.label}: ${r.value}`).join('\n'));sec('품질 약속',(a.quality_promises||[]).map(r=>`- ${r.title}: ${r.desc}`).join('\n'));
+ sec('스타일링',(a.styling||[]).map(r=>`- ${r.title}: ${r.desc}`).join('\n'));sec('추천',(a.occasions||[]).join(', '));sec('관리법',(a.care||[]).map(x=>'- '+x).join('\n'));sec('포장',a.packaging);sec('FAQ',(a.faq||[]).map(r=>`Q. ${r.q}\nA. ${r.a}`).join('\n\n'));
+ sec('상품정보제공고시',Object.entries(a.notice||{}).map(([k,v])=>`- ${k}: ${v}`).join('\n'));sec('인스타그램 캡션',s.insta_caption);sec('광고 문구',s.short_ad);return L.join('\n')}
+function guard(){if(!P||!P.ai){toast('먼저 상품을 만들어 주세요.');return false}return true}
+$('#exJpg').onclick=async()=>{if(!guard()||!ensureClean()||!checkVerify())return;busy(true,'상세페이지 이미지 만드는 중…');try{download(await detailJpg(),fileSafe(P.name)+'_상세페이지.jpg');toast('저장했어요.')}catch(e){toast(safeErr(e),5000)}finally{busy(false)}};
+$('#exSplit').onclick=async()=>{if(!guard()||!ensureClean()||!checkVerify())return;busy(true,'분할 이미지 만드는 중…');try{const parts=await detailSplit();download(await makeZip(parts.map((b,i)=>({name:`상세페이지_${String(i+1).padStart(2,'0')}.jpg`,data:b}))),fileSafe(P.name)+'_상세페이지_분할.zip')}catch(e){toast(safeErr(e),5000)}finally{busy(false)}};
+$('#exThumb').onclick=async()=>{if(!guard())return;busy(true,'썸네일 만드는 중…');try{download(await makeZip(await thumbs()),fileSafe(P.name)+'_썸네일1000.zip')}catch(e){toast(safeErr(e))}finally{busy(false)}};
+$('#exSns').onclick=async()=>{if(!guard())return;busy(true,'SNS 카드 만드는 중…');try{download(await snsCard(),fileSafe(P.name)+'_인스타카드.jpg')}catch(e){toast(safeErr(e))}finally{busy(false)}};
+$('#exTxt').onclick=()=>{if(!guard()||!ensureClean())return;download(new Blob(['\ufeff'+textPack()],{type:'text/plain;charset=utf-8'}),fileSafe(P.name)+'_상품텍스트.txt')};
+$('#exHtml').onclick=async()=>{if(!guard()||!ensureClean())return;busy(true,'HTML 묶는 중…');try{const files=[];const map={};for(const k of Object.keys(blobs)){const n='images/'+k+'.jpg';files.push({name:n,data:await toJpeg(blobs[k],1720,.9)});map[k]=n}files.unshift({name:'detail.html',data:detailDoc(P,k=>map[k]||'',getShop())});files.push({name:'사용법.txt',data:'\ufeffdetail.html을 브라우저로 열면 상세페이지가 보입니다.\n자사몰(카페24 등) HTML 편집기에 넣을 때는 images 폴더의 사진을 쇼핑몰에 먼저 올리고, HTML 속 images/파일명 주소를 올린 사진 주소로 바꿔 주세요.\n'});download(await makeZip(files),fileSafe(P.name)+'_상세페이지HTML.zip')}catch(e){toast(safeErr(e))}finally{busy(false)}};
+$('#exAll').onclick=async()=>{if(!guard()||!ensureClean()||!checkVerify())return;const base=fileSafe(P.name);busy(true,'판매 패키지 만드는 중… (상세페이지)');try{const files=[];
+ files.push({name:'01_상세페이지/상세페이지_전체.jpg',data:await detailJpg()});(await detailSplit()).forEach((b,i)=>files.push({name:`01_상세페이지/분할_${String(i+1).padStart(2,'0')}.jpg`,data:b}));
+ busy(true,'판매 패키지 만드는 중… (이미지)');for(const k of ['original',...SHOTS.map(s=>s.key)])if(blobs[k])files.push({name:'02_판매이미지/'+labelOf(k)+'.jpg',data:await toJpeg(blobs[k],2048,.93)});
+ (await thumbs()).forEach(f=>files.push({name:'03_썸네일_1000/'+f.name,data:f.data}));files.push({name:'04_SNS/인스타카드_1080x1350.jpg',data:await snsCard()});files.push({name:'05_텍스트/상품텍스트.txt',data:'\ufeff'+textPack()});
+ busy(true,'판매 패키지 만드는 중… (판매 사이트)');await save();const site=await buildSite([P],true);site.forEach(f=>files.push({name:'06_판매사이트/'+f.name,data:f.data}));
+ download(await makeZip(files),base+'_판매패키지.zip');toast('판매 패키지를 저장했어요.')}catch(e){toast(safeErr(e),5000)}finally{busy(false)}};
+$('#toShop').onclick=async()=>{if(!guard())return;await save();go('shop');toast('판매 사이트에 진열됐어요.')};
+
+/* ───────── 05 상점 ───────── */
+const SHOP_FIELDS=[
+ ['#','기본 정보'],
+ ['name','상점 이름','예: LUMIÈRE JEWELRY','text'],['tagline','한 줄 소개','예: 매일 빛나는 작은 주얼리','text',1],['phone','고객센터·주문 알림 휴대폰','010-0000-0000','tel'],['email','이메일','','email'],['kakao','카카오톡 채널/오픈채팅 링크','https://pf.kakao.com/...','url',1],['instagram','인스타그램 링크','https://instagram.com/...','url',1],
+ ['#','결제 수단 (입력한 것만 결제 페이지에 표시)'],
+ ['bank','무통장입금 계좌','예: 국민 000000-00-000000 (예금주 홍길동)','text',1],['depositHours','입금 기한','주문 후 24시간 이내','text'],['toss','토스 송금 링크','https://toss.me/아이디','url'],['kakaopay','카카오페이 송금 링크','https://qr.kakaopay.com/...','url',1],['cardLink','카드결제 링크','결제링크 서비스 주소 (페이앱·결제선생 등)','url',1],['orderEndpoint','주문 자동 접수 주소 (선택)','Formspree 폼 주소 또는 Google Apps Script 웹앱 주소','url',1],
+ ['#','배송 정책'],
+ ['shipFee','배송비(원)','3000','number'],['freeOver','무료배송 기준(원)','50000','number'],['extraFee','도서·산간 추가 배송비','예: 제주 3,000원 / 도서산간 5,000원','text',1],['courier','택배사','CJ대한통운','text'],['shipDays','출고 안내','결제 확인 후 1~3 영업일 이내 출고','text'],['returnFee','교환·반품 배송비','단순 변심 왕복 6,000원 (불량·오배송은 판매자 부담)','text',1],
+ ['#','출고지 (상품을 보내는 곳)'],
+ ['shipFrom','출고지 주소','예: (06000) 서울시 강남구 ○○로 00, 0층','text',1],['shipFromTel','출고지 연락처','','tel'],
+ ['#','반품지 (고객이 교환·반품 상품을 보내는 곳)'],
+ ['returnName','반품지 받는 분','예: 루미에르 반품 담당','text'],['returnTel','반품지 연락처','','tel'],['returnAddr','반품지 주소','예: (06000) 서울시 강남구 ○○로 00, 0층','text',1],
+ ['#','입고지 (교환·반품 상품이 최종 입고되는 곳 · 비우면 반품지와 동일)'],
+ ['inboundAddr','입고지 주소','물류창고·작업실 등','text',1],['inboundTel','입고지 연락처','','tel'],
+ ['#','사업자 정보 (전자상거래법 필수 표시)'],
+ ['company','상호','','text'],['ceo','대표자','','text'],['bizNo','사업자등록번호','000-00-00000','text'],['mailOrder','통신판매업 신고번호','제0000-서울강남-0000호','text'],['address','사업장 주소','','text',1],['privacyOfficer','개인정보 보호책임자','비우면 대표자','text'],['hosting','호스팅 제공자','예: Netlify / GitHub','text']];
+const BIZ_REQ=['company','ceo','bizNo','mailOrder','address','phone'];
+function getShop(){try{return JSON.parse(localStorage.getItem(SHOP_KEY)||'{}')}catch(e){return{}}}
+function setShop(s){try{localStorage.setItem(SHOP_KEY,JSON.stringify(s))}catch(e){}}
+function bizMissing(s){s=s||getShop();return BIZ_REQ.filter(k=>!String(s[k]||'').trim()).map(k=>SHOP_FIELDS.find(f=>f[0]===k)[1])}
+function addrMissing(s){s=s||getShop();const m=[];if(!s.shipFrom)m.push('출고지');if(!s.returnAddr)m.push('반품지');return m}
+function payMissing(s){s=s||getShop();return !(s.bank||s.toss||s.kakaopay||s.cardLink)}
+function renderShopForm(){const s=getShop();$('#shopForm').innerHTML=SHOP_FIELDS.map(f=>f[0]==='#'?`<div class="full" style="font-weight:800;margin-top:8px;border-top:1px solid var(--line);padding-top:12px">${esc(f[1])}</div>`:`<label class="f ${f[4]?'full':''}">${f[1]}<input type="${f[3]}" data-s="${f[0]}" value="${esc(s[f[0]]||'')}" placeholder="${esc(f[2])}"></label>`).join('')+'<div class="full" id="bizWarn"></div>';
+ const bw=()=>{const m=bizMissing(),a=addrMissing(),pm=payMissing();const msgs=[];if(m.length)msgs.push(`사업자 정보 미입력: <b>${m.join(', ')}</b> — 온라인 판매 시 사이트 하단에 꼭 표시해야 해요.`);if(a.length)msgs.push(`주소 미입력: <b>${a.join(', ')}</b> — 상세페이지 배송·반품 안내에 들어가요.`);if(pm)msgs.push('결제 수단이 없어요. 계좌·토스·카카오페이·카드결제 링크 중 하나 이상 입력하세요.');$('#bizWarn').innerHTML=msgs.length?`<div class="warn" style="margin:0">${msgs.join('<br>')}</div>`:''};bw();
+ $$('#shopForm [data-s]').forEach(i=>i.oninput=()=>{const s=getShop();s[i.dataset.s]=i.value.trim();setShop(s);bw();clearTimeout(renderShop._t);renderShop._t=setTimeout(previewShop,800)})}
+async function allProducts(){const ps=await DB.all('products');return ps.filter(p=>p.ai&&p.imgs&&Object.keys(p.imgs).length).sort((a,b)=>b.createdAt-a.createdAt)}
+async function renderShop(){renderShopForm();const ps=await allProducts();const box=$('#plist');if(!ps.length){box.innerHTML='<div class="empty">아직 등록된 상품이 없어요. 사진을 올려 첫 상품을 만들어 보세요.</div>'}else{const items=[];for(const p of ps){const k=['packshot','original','styled'].find(k=>p.imgs[k]);const b=k?await DB.get('blobs',p.id+':'+k):null;items.push(`<div class="pitem"><img src="${b?URL.createObjectURL(b):''}" alt=""><div><b>${esc(p.name||'이름 없음')}</b><small>${CATS[p.category]?.ko||''} · ${p.price?won(p.price):'가격 미입력'}</small></div><div class="row"><button class="btn ghost sm" data-open="${p.id}">편집</button><button class="btn danger sm" data-del="${p.id}">삭제</button></div></div>`)}box.innerHTML=items.join('');
+  box.querySelectorAll('[data-open]').forEach(b=>b.onclick=async()=>{await loadProduct(b.dataset.open);go('detail')});box.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{if(!confirm('이 상품을 삭제할까요? 되돌릴 수 없어요.'))return;const p=await DB.get('products',b.dataset.del);for(const k of Object.keys(p.imgs||{}))await DB.del('blobs',p.id+':'+k);await DB.del('products',p.id);if(P&&P.id===p.id)newProduct();renderShop()})}
+ previewShop()}
+let shopUrls=[];
+async function previewShop(){shopUrls.forEach(u=>URL.revokeObjectURL(u));shopUrls=[];const ps=await allProducts();const files=await buildSite(ps,false);$('#shopFrame').srcdoc=files.find(f=>f.name==='index.html').data}
+$('#shopRefresh').onclick=previewShop;
+$('#shopZip').onclick=async()=>{const ps=await allProducts();if(!ps.length){toast('먼저 상품을 만들어 주세요.');return}const miss=[...bizMissing(),...addrMissing()];if(miss.length&&!confirm('아직 입력하지 않은 항목이 있어요: '+miss.join(', ')+'\n\n온라인 판매 전 꼭 입력해 주세요. 그래도 받을까요?'))return;if(payMissing()&&!confirm('결제 수단(계좌·토스·카카오페이·카드결제 링크)이 없어요. 그래도 받을까요?'))return;busy(true,'판매 사이트 만드는 중…');try{const files=await buildSite(ps,true);files.push({name:'공개하는법.txt',data:'\ufeff1) 이 폴더(index.html과 images 폴더)를 https://app.netlify.com/drop 에 통째로 끌어다 놓으면 바로 인터넷 주소가 생깁니다.\n2) 또는 GitHub 저장소에 올리고 Settings > Pages에서 main 브랜치를 선택하세요.\n3) 상품을 추가·수정하면 젬샷 스튜디오에서 ZIP을 다시 받아 덮어쓰기 하세요.\n'});download(await makeZip(files),fileSafe(getShop().name||'my-shop')+'_판매사이트.zip')}catch(e){toast(safeErr(e),5000)}finally{busy(false)}};
+async function productBlobs(p){if(P&&p.id===P.id)return{...blobs};const o={};for(const k of Object.keys(p.imgs||{})){const b=await DB.get('blobs',p.id+':'+k);if(b)o[k]=b}return o}
+async function buildSite(ps,forExport){const shop=getShop();const files=[];const data=[];
+ for(const p0 of ps){const bl=await productBlobs(p0);const p=sanitizeProduct(JSON.parse(JSON.stringify(p0))).p;const map={};for(const [k,b] of Object.entries(bl)){if(forExport){const n=`images/${p.id}-${k}.jpg`;files.push({name:n,data:await toJpeg(b,1720,.88)});map[k]=n}else{const u=URL.createObjectURL(b);shopUrls.push(u);map[k]=u}}
+  const order=['packshot','styled','wear','macro','lifestyle','gift','hero','original'].filter(k=>map[k]);
+  data.push({id:p.id,name:p.name,en:p.nameEn,cat:CATS[p.category]?.ko||'주얼리',catEn:CATS[p.category]?.en||'JEWELRY',price:+p.price||0,list:+p.listPrice||0,options:String(p.options||'').split(/[,，]/).map(s=>s.trim()).filter(Boolean),summary:p.ai?.summary||'',catch:p.ai?.catchphrase||'',store:p.storeUrl||'',imgs:order.map(k=>map[k]),thumb:map.packshot||map.original||map[order[0]],dp:dpBody(p,k=>map[k]||'',shop),dpcss:dpCSS(themeOf(p))})}
+ files.unshift({name:'index.html',data:siteHTML(shop,data)});return files}
+function todayKo(){const d=new Date();return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일'}
+function siteHTML(shop,products){const json=JSON.stringify({shop,products,date:todayKo()}).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');const name=shop.name||'MY JEWELRY';const bd=String(shop.bizNo||'').replace(/\D/g,'');
+ const bizLink=bd.length===10?`https://www.ftc.go.kr/bizCommPop.do?wrkr_no=${bd}`:'';
+ const l1=[shop.company&&'상호 '+esc(shop.company),shop.ceo&&'대표 '+esc(shop.ceo),shop.bizNo&&'사업자등록번호 '+esc(shop.bizNo)+(bizLink?` <a class="bz" href="${bizLink}" target="_blank" rel="noopener">[사업자정보확인]</a>`:''),shop.mailOrder&&'통신판매업 신고 '+esc(shop.mailOrder)].filter(Boolean).join(' · ');
+ const l2=[shop.address&&'사업장 주소 '+esc(shop.address),shop.phone&&'고객센터 '+esc(shop.phone),shop.email&&'이메일 '+esc(shop.email)].filter(Boolean).join(' · ');
+ const l3=[shop.shipFrom&&'출고지 '+esc(shop.shipFrom),shop.returnAddr&&'반품지 '+esc(shop.returnAddr)].filter(Boolean).join(' · ');
+ const l4=['개인정보 보호책임자 '+esc(shop.privacyOfficer||shop.ceo||'-'),shop.hosting&&'호스팅 제공자 '+esc(shop.hosting)].filter(Boolean).join(' · ');
+ return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(name)}</title><meta name="description" content="${esc(shop.tagline||name)}"><meta property="og:title" content="${esc(name)}"><meta property="og:description" content="${esc(shop.tagline||'')}">${products[0]?`<meta property="og:image" content="${esc(products[0].thumb)}">`:''}${FONT_LINKS}
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#221d17;background:#faf8f4;word-break:keep-all;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+.sh{position:sticky;top:0;z-index:10;background:rgba(250,248,244,.94);backdrop-filter:blur(8px);border-bottom:1px solid #ebe3d7}.sh .in{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:.28em;font-size:22px}.nav{display:flex;gap:16px;font-size:14px;color:#6f655a}
+.hero{max-width:1180px;margin:auto;padding:70px 20px 40px;text-align:center}.hero small{font-family:'Cormorant Garamond',serif;letter-spacing:.35em;color:#a3804c;font-weight:700}.hero h1{font-family:'Gowun Batang',serif;font-size:clamp(30px,5vw,48px);margin:14px 0 10px}.hero p{color:#7a6f63;margin:0}
+.grid{max-width:1180px;margin:auto;padding:20px 20px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:26px}
+.pc .ph{aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:#fff}.pc img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.pc:hover img{transform:scale(1.04)}.pc .pi{padding:14px 4px}.pc small{color:#a3804c;font-size:12px;letter-spacing:.1em}.pc b{display:block;font-size:16px;margin:4px 0 6px}
+.price s{color:#aaa;font-size:13px;margin-right:6px}.price em{color:#d0473a;font-style:normal;font-weight:800;margin-right:6px}.price strong{font-size:17px}
+.pd{max-width:1180px;margin:auto;padding:30px 20px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px}.gal .main{aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:#fff}.gal .main img{width:100%;height:100%;object-fit:cover}
+.gal .th{display:flex;gap:8px;margin-top:10px;overflow-x:auto}.gal .th img{width:72px;height:72px;object-fit:cover;border-radius:10px;cursor:pointer;opacity:.6;border:2px solid transparent;flex:none}.gal .th img.on{opacity:1;border-color:#a3804c}
+.buy small{color:#a3804c;letter-spacing:.15em;font-size:13px}.buy h1{font-family:'Gowun Batang',serif;font-size:32px;margin:8px 0 4px;line-height:1.35}.buy .en{font-family:'Cormorant Garamond',serif;color:#8a7f73;letter-spacing:.1em;font-size:18px}.buy .desc{color:#6f655a;line-height:1.8;margin:16px 0}
+.buy .price{font-size:20px;padding:16px 0;border-top:1px solid #ebe3d7;border-bottom:1px solid #ebe3d7}.buy .price strong{font-size:26px}
+.buy label{display:block;font-size:13px;font-weight:700;margin:16px 0 6px}.buy select,.buy input,input.i,textarea.i,select.i{width:100%;padding:12px;border:1px solid #ddd3c4;border-radius:10px;font:inherit;background:#fff;color:inherit}
+.qty{display:flex;align-items:center;gap:8px}.qty button{width:42px;height:42px;border:1px solid #ddd3c4;background:#fff;border-radius:10px;font-size:18px;cursor:pointer}.qty input{width:70px;text-align:center}
+.tot{display:flex;justify-content:space-between;margin:18px 0;font-size:15px;color:#6f655a}.tot b{font-size:22px;color:#221d17}
+.b{display:flex;width:100%;justify-content:center;align-items:center;padding:16px;border-radius:12px;border:0;font:inherit;font-weight:800;font-size:16px;cursor:pointer;margin-top:8px;text-align:center}.b1{background:#221d17;color:#fff}.b2{background:#03c75a;color:#fff}.b3{background:#fee500;color:#191600}.b4{background:#fff;border:1px solid #ddd3c4;color:#221d17}
+.bs{display:inline-flex;padding:11px 14px;border-radius:10px;border:1px solid #221d17;background:#fff;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
+.ship{font-size:13px;color:#7a6f63;line-height:1.75;margin-top:14px;background:#f3eee6;border-radius:12px;padding:12px 14px}
+.tabs{max-width:1180px;margin:30px auto 0;padding:0 20px;display:flex;gap:4px;border-bottom:1px solid #ebe3d7;position:sticky;top:62px;background:#faf8f4;z-index:5}.tabs a{padding:14px 18px;font-weight:700;color:#221d17;border-bottom:2px solid #221d17}
+.dpbox{max-width:860px;margin:30px auto 60px}
+.ft{background:#221d17;color:#cfc6ba;padding:40px 20px;font-size:13px;line-height:1.9}.ft .in{max-width:1180px;margin:auto}.ft .lg{color:#fff;font-family:'Cormorant Garamond',serif;letter-spacing:.25em;font-size:18px;font-weight:700}
+.fl{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px}.fl a{color:#fff}.ft a.bz{color:#e8d3ad;text-decoration:underline}
+.co{max-width:1080px;margin:auto;padding:24px 20px 80px;display:grid;grid-template-columns:1.3fr .9fr;gap:30px;align-items:start}.co h1{font-family:'Gowun Batang',serif;font-size:28px;margin:0 0 6px}
+.box{background:#fff;border:1px solid #ebe3d7;border-radius:18px;padding:22px;margin-bottom:16px}.box h2{font-size:17px;margin:0 0 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.box h2 label{font-size:13px;font-weight:600;color:#6f655a;display:flex;gap:6px;align-items:center;cursor:pointer}
+.oi{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center}.oi img{width:72px;height:72px;border-radius:12px;object-fit:cover}
+.fld{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fld .w{grid-column:1/-1}.fld label,.box label.l{display:block;font-size:13px;font-weight:700;margin:0 0 6px}.zip{display:flex;gap:8px}
+.pm{display:grid;gap:8px}.pm label{display:flex;gap:10px;align-items:flex-start;border:1px solid #ddd3c4;border-radius:12px;padding:14px;cursor:pointer}.pm label.on{border-color:#221d17;background:#faf6ef}.pm small{display:block;color:#8a7f73;margin-top:3px;font-size:12.5px}
+.ag label{display:flex;gap:10px;align-items:flex-start;padding:10px 0;font-size:14px;cursor:pointer}.ag .all{font-weight:800;border-bottom:1px solid #ebe3d7;padding-bottom:14px;margin-bottom:6px}
+.ag input{width:18px;height:18px;margin-top:2px;accent-color:#221d17;flex:none}.ag .tg{margin-left:auto;font-size:12px;color:#8a7f73;text-decoration:underline;cursor:pointer;flex:none;background:none;border:0;padding:0 2px}
+.ag .tx{display:none;background:#f6f1e9;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.75;color:#5f564c;margin:0 0 8px 28px}.ag .tx.show{display:block}.ag .tx a{text-decoration:underline}
+.ag table{width:100%;border-collapse:collapse;font-size:12px;margin:6px 0}.ag td,.ag th{border:1px solid #e2d8c9;padding:6px;text-align:left;vertical-align:top}.ag th{width:28%;background:#fbf8f3}
+.sumbox{position:sticky;top:90px}.sr{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:15px;color:#5f564c}.sr.t{border-top:1px solid #ebe3d7;margin-top:8px;padding-top:14px;font-size:17px;color:#221d17;font-weight:800}.sr.t b{font-size:24px;color:#c0392b}
+.req{color:#c0392b}.done{max-width:640px;margin:auto;padding:40px 20px 80px}.done .ok{text-align:center;margin-bottom:20px}.done .ok .c{width:64px;height:64px;border-radius:50%;background:#221d17;color:#fff;display:grid;place-items:center;font-size:30px;margin:0 auto 14px}
+.step{display:flex;gap:10px;align-items:center;font-weight:800;margin-bottom:10px}.step i{font-style:normal;width:26px;height:26px;border-radius:50%;background:#a3804c;color:#fff;display:grid;place-items:center;font-size:13px}
+.acc{font-size:20px;font-weight:800;background:#f6f1e9;border-radius:12px;padding:14px;text-align:center;margin:10px 0;word-break:break-all}
+.doc{max-width:860px;margin:auto;padding:40px 20px 80px;line-height:1.85;font-size:15px;color:#4c443a}.doc h1{font-family:'Gowun Batang',serif;color:#221d17}.doc h3{margin:26px 0 6px;font-size:16px;color:#221d17}.doc p{margin:0 0 8px}
+.doc table{width:100%;border-collapse:collapse;margin:8px 0}.doc th,.doc td{border:1px solid #e2d8c9;padding:9px 10px;text-align:left;vertical-align:top}.doc th{background:#f6f1e9;width:28%}
+.empty{padding:80px 20px;text-align:center;color:#8a7f73}.back{max-width:1180px;margin:auto;padding:16px 20px 0;font-size:14px;color:#8a7f73;display:block}
+#pcLayer{display:none;position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.5);align-items:center;justify-content:center}#pcLayer.show{display:flex}#pcLayer .w{background:#fff;width:min(460px,94vw);height:min(560px,86vh);border-radius:14px;overflow:hidden;position:relative}#pcLayer .x{position:absolute;right:8px;top:6px;z-index:2;border:0;background:#fff;font-size:22px;cursor:pointer}
+@media(max-width:800px){.pd,.co{grid-template-columns:1fr;gap:20px}.nav{display:none}.tabs{top:58px}.sumbox{position:static}.fld{grid-template-columns:1fr}}
+</style></head><body>
+<header class="sh"><div class="in"><a href="#/" class="logo">${esc(name.toUpperCase())}</a><nav class="nav"><a href="#/">SHOP</a>${shop.instagram?`<a href="${esc(shop.instagram)}" target="_blank" rel="noopener">INSTAGRAM</a>`:''}${shop.kakao?`<a href="${esc(shop.kakao)}" target="_blank" rel="noopener">KAKAO 문의</a>`:''}</nav></div></header>
+<div id="app"></div>
+<footer class="ft"><div class="in"><div class="fl"><a href="#/terms">이용약관</a><a href="#/privacy"><b>개인정보처리방침</b></a><a href="#/delivery">배송·교환·반품 안내</a>${bizLink?`<a href="${bizLink}" target="_blank" rel="noopener">사업자정보확인</a>`:''}</div><div class="lg">${esc(name.toUpperCase())}</div>${l1||'사업자 정보 미입력'}<br>${l2}${l3?'<br>'+l3:''}<br>${l4}<br>© ${new Date().getFullYear()} ${esc(name)}. All rights reserved.</div></footer>
+<div id="pcLayer"><div class="w"><button class="x" type="button" aria-label="닫기">×</button><div id="pcWrap" style="width:100%;height:100%"></div></div></div>
+<script>window.__SHOP=${json};<\/script>
+<script>(${SHOP_RUNTIME.toString()})();<\/script>
+</body></html>`}
+function SHOP_RUNTIME(){
+ var D=window.__SHOP,S=D.shop||{},PS=D.products||[];var app=document.getElementById('app');var cur='';var mem={};
+ function sget(k){try{var v=sessionStorage.getItem(k);return v?JSON.parse(v):(mem[k]||null)}catch(e){return mem[k]||null}}
+ function sset(k,v){mem[k]=v;try{sessionStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+ function won(n){return Number(n||0).toLocaleString('ko-KR')+'원'}
+ function price(p){var sale=p.list&&p.list>p.price&&p.price;return '<div class="price">'+(sale?'<s>'+won(p.list)+'</s><em>'+Math.round((1-p.price/p.list)*100)+'%</em>':'')+'<strong>'+(p.price?won(p.price):'가격 문의')+'</strong></div>'}
+ function fee(t){var f=+S.shipFee||0,o=+S.freeOver||0;if(!f)return 0;if(o&&t>=o)return 0;return f}
+ function feeText(){var f=+S.shipFee||0,o=+S.freeOver||0;return f?won(f)+(o?' ('+won(o)+' 이상 무료)':''):'무료'}
+ function inbound(){return S.inboundAddr?S.inboundAddr+(S.inboundTel?' / '+S.inboundTel:''):(S.returnAddr?'반품지와 동일':'-')}
+ function retAddr(){return S.returnAddr?[S.returnName,S.returnAddr,S.returnTel].filter(Boolean).join(' / '):'-'}
+ function fit(){var ds=document.querySelectorAll('.dpbox .dp');for(var i=0;i<ds.length;i++){var w=ds[i].parentElement.clientWidth;ds[i].style.zoom=Math.min(1,w/860)}}
+ window.addEventListener('resize',fit);
+ function go(h){cur='';location.hash=h;setTimeout(function(){if(cur!==h)route(h)},60)}
+ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();go(a.getAttribute('href')||'#/')});
+ function home(){document.title=S.name||'SHOP';app.innerHTML='<section class="hero"><small>'+esc((S.name||'JEWELRY').toUpperCase())+'</small><h1>'+esc(S.tagline||'매일 빛나는 작은 주얼리')+'</h1><p>'+PS.length+'개의 상품</p></section>'+(PS.length?'<section class="grid">'+PS.map(function(p){return '<a class="pc" href="#/p/'+p.id+'"><div class="ph"><img src="'+esc(p.thumb)+'" alt="'+esc(p.name)+'" loading="lazy"></div><div class="pi"><small>'+esc(p.cat)+'</small><b>'+esc(p.name)+'</b>'+price(p)+'</div></a>'}).join('')+'</section>':'<div class="empty">준비 중인 상품이 곧 공개됩니다.</div>');window.scrollTo(0,0)}
+ function product(p){document.title=p.name+' | '+(S.name||'');
+  var opt=p.options.length?'<label>옵션 선택</label><select id="opt"><option value="">옵션을 선택하세요</option>'+p.options.map(function(o){return '<option>'+esc(o)+'</option>'}).join('')+'</select>':'';
+  app.innerHTML='<a class="back" href="#/">← 전체 상품</a><section class="pd"><div class="gal"><div class="main"><img id="mainImg" src="'+esc(p.imgs[0]||'')+'" alt="'+esc(p.name)+'"></div><div class="th">'+p.imgs.map(function(u,i){return '<img src="'+esc(u)+'" class="'+(i?'':'on')+'" alt="">'}).join('')+'</div></div>'+
+  '<div class="buy"><small>'+esc(p.catEn)+'</small><h1>'+esc(p.name)+'</h1>'+(p.en?'<div class="en">'+esc(p.en)+'</div>':'')+'<p class="desc">'+esc(p.catch)+'<br>'+esc(p.summary)+'</p>'+price(p)+opt+'<label>수량</label><div class="qty"><button id="qm" type="button">−</button><input id="qty" type="number" value="1" min="1"><button id="qp" type="button">+</button></div><div class="tot"><span>총 상품금액</span><b id="tot"></b></div>'+
+  '<button class="b b1" id="buyBtn" type="button">구매하기</button>'+(p.store?'<a class="b b2" href="'+esc(p.store)+'" target="_blank" rel="noopener">스토어에서 바로 구매</a>':'')+(S.kakao?'<a class="b b3" href="'+esc(S.kakao)+'" target="_blank" rel="noopener">카카오톡 문의</a>':'')+
+  '<div class="ship">배송비 '+feeText()+(S.extraFee?' · 도서산간 '+esc(S.extraFee):'')+'<br>'+esc(S.shipDays||'결제 확인 후 1~3 영업일 이내 출고')+(S.courier?' · '+esc(S.courier):'')+(S.shipFrom?'<br>출고지 '+esc(S.shipFrom):'')+'</div></div></section>'+
+  '<nav class="tabs"><a href="#/delivery">상세정보</a></nav><style>'+p.dpcss+'</style><div class="dpbox">'+p.dp+'</div>';
+  window.scrollTo(0,0);fit();setTimeout(fit,300);
+  var ths=document.querySelectorAll('.th img');for(var i=0;i<ths.length;i++)(function(im){im.onclick=function(){document.getElementById('mainImg').src=im.src;for(var j=0;j<ths.length;j++)ths[j].classList.remove('on');im.classList.add('on')}})(ths[i]);
+  var tabA=document.querySelector('.tabs a');tabA.onclick=function(e){e.preventDefault();e.stopPropagation();document.querySelector('.dpbox').scrollIntoView({behavior:'smooth'})};
+  var q=document.getElementById('qty');function upd(){var n=Math.max(1,parseInt(q.value,10)||1);q.value=n;document.getElementById('tot').textContent=p.price?won(p.price*n):'가격 문의'}
+  document.getElementById('qm').onclick=function(){q.value=Math.max(1,(+q.value||1)-1);upd()};document.getElementById('qp').onclick=function(){q.value=(+q.value||1)+1;upd()};q.oninput=upd;upd();
+  document.getElementById('buyBtn').onclick=function(){var os=document.getElementById('opt');if(os&&!os.value){alert('옵션을 선택해 주세요.');os.focus();return}if(!p.price){alert('가격 문의 상품이에요. 카카오톡이나 전화로 문의해 주세요.');return}sset('gs-cart',{id:p.id,opt:os?os.value:'',qty:Math.max(1,+q.value||1)});go('#/checkout')}}
+ function payNames(){var a=[];if(S.toss)a.push('비바리퍼블리카(토스)');if(S.kakaopay)a.push('카카오페이');if(S.cardLink)a.push('카드결제 대행사');return a.join(', ')}
+ function methods(p){var m=[];if(S.bank)m.push({id:'bank',name:'무통장입금',desc:S.bank});if(S.toss)m.push({id:'toss',name:'토스 송금',desc:'주문 완료 후 토스 송금 화면으로 연결돼요'});if(S.kakaopay)m.push({id:'kakaopay',name:'카카오페이 송금',desc:'주문 완료 후 카카오페이 송금 화면으로 연결돼요'});if(S.cardLink)m.push({id:'card',name:'신용·체크카드',desc:'주문 완료 후 카드 결제 페이지로 연결돼요'});if(p.store)m.push({id:'store',name:'스토어 결제 (네이버페이 등)',desc:'판매 스토어에서 결제해요'});if(!m.length)m.push({id:'contact',name:'판매자 안내 결제',desc:'주문 접수 후 판매자가 결제 방법을 안내해 드려요'});return m}
+ function agree(id,t,body){return '<label><input type="checkbox" class="agc" id="'+id+'"><span>'+t+'</span>'+(body?'<button type="button" class="tg" data-t="'+id+'">보기</button>':'')+'</label>'+(body?'<div class="tx" id="tx-'+id+'">'+body+'</div>':'')}
+ function postcode(cb){var L=document.getElementById('pcLayer'),W=document.getElementById('pcWrap');function open(){W.innerHTML='';L.classList.add('show');new window.daum.Postcode({oncomplete:function(d){L.classList.remove('show');cb(d.zonecode,d.roadAddress||d.jibunAddress)},width:'100%',height:'100%'}).embed(W)}
+  L.querySelector('.x').onclick=function(){L.classList.remove('show')};if(window.daum&&window.daum.Postcode)return open();var s=document.createElement('script');s.src='https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';s.onload=open;s.onerror=function(){alert('우편번호 검색을 불러오지 못했어요. 주소를 직접 입력해 주세요.')};document.head.appendChild(s)}
+ function checkout(){var c=sget('gs-cart');var p=c&&PS.filter(function(x){return x.id===c.id})[0];if(!p)return home();document.title='주문/결제 | '+(S.name||'');
+  var sub=p.price*c.qty,sf=fee(sub),tot=sub+sf,ms=methods(p),pn=payNames();
+  app.innerHTML='<section class="co"><div><h1>주문 / 결제</h1><p style="color:#8a7f73;margin:0 0 18px">주문 정보와 배송지를 확인하고 결제를 진행해 주세요.</p>'+
+  '<div class="box"><h2>주문 상품</h2><div class="oi"><img src="'+esc(p.thumb)+'" alt=""><div><b>'+esc(p.name)+'</b><div style="color:#8a7f73;font-size:13px;margin-top:4px">'+(c.opt?'옵션: '+esc(c.opt)+' · ':'')+'수량 '+c.qty+'개</div></div><b>'+won(sub)+'</b></div></div>'+
+  '<div class="box"><h2>주문자 정보</h2><div class="fld"><div><label>주문자 이름 <span class="req">*</span></label><input class="i" id="bName" autocomplete="name"></div><div><label>휴대폰 번호 <span class="req">*</span></label><input class="i" id="bTel" type="tel" autocomplete="tel" placeholder="010-0000-0000"></div><div class="w"><label>이메일 (선택)</label><input class="i" id="bMail" type="email" autocomplete="email" placeholder="주문 안내를 받을 이메일"></div></div></div>'+
+  '<div class="box"><h2>배송지 정보<label><input type="checkbox" id="same"> 주문자 정보와 동일</label></h2><div class="fld"><div><label>받는 분 <span class="req">*</span></label><input class="i" id="rName"></div><div><label>받는 분 연락처 <span class="req">*</span></label><input class="i" id="rTel" type="tel" placeholder="010-0000-0000"></div>'+
+  '<div class="w"><label>우편번호 <span class="req">*</span></label><div class="zip"><input class="i" id="rZip" autocomplete="postal-code" placeholder="우편번호" style="max-width:160px"><button type="button" class="bs" id="zipBtn">주소 검색</button></div></div>'+
+  '<div class="w"><label>기본 주소 <span class="req">*</span></label><input class="i" id="rAddr" autocomplete="street-address" placeholder="도로명 주소"></div><div class="w"><label>상세 주소 <span class="req">*</span></label><input class="i" id="rAddr2" placeholder="동·호수 등"></div>'+
+  '<div class="w"><label>배송 요청사항</label><select class="i" id="rReq"><option value="">선택 안 함</option><option>문 앞에 놓아 주세요</option><option>경비실에 맡겨 주세요</option><option>택배함에 넣어 주세요</option><option>배송 전 연락 부탁드려요</option><option value="__">직접 입력</option></select><input class="i" id="rReq2" placeholder="요청사항을 입력하세요" style="display:none;margin-top:8px"></div>'+
+  '<div class="w" style="font-size:12.5px;color:#8a7f73;line-height:1.7">출고지: '+esc(S.shipFrom||'-')+' · 택배사: '+esc(S.courier||'택배')+(S.extraFee?'<br>도서·산간 추가 배송비: '+esc(S.extraFee):'')+'</div></div></div>'+
+  '<div class="box"><h2>결제 수단</h2><div class="pm">'+ms.map(function(m,i){return '<label class="'+(i?'':'on')+'"><input type="radio" name="pm" value="'+m.id+'" '+(i?'':'checked')+'><div><b>'+esc(m.name)+'</b><small>'+esc(m.desc)+'</small></div></label>'}).join('')+'</div><div id="depBox" style="margin-top:12px"><label class="l">입금자명</label><input class="i" id="oDep" placeholder="주문자와 다를 경우 입력"></div></div>'+
+  '<div class="box ag"><h2>약관 동의</h2><label class="all"><input type="checkbox" id="agAll"> 아래 내용에 모두 동의합니다.</label>'+
+   agree('ag1','[필수] 만 14세 이상입니다.','')+
+   agree('ag2','[필수] 개인정보 수집·이용 동의','<table><tr><th>수집 항목</th><td>주문자 이름·휴대폰 번호, 받는 분 이름·연락처·배송 주소 (선택: 이메일, 입금자명, 배송 요청사항)</td></tr><tr><th>이용 목적</th><td>주문 접수·확인, 결제 확인, 상품 배송, 교환·반품·환불, 고객 문의 응대</td></tr><tr><th>보유 기간</th><td>목적 달성 후 지체 없이 파기. 단, 전자상거래법에 따라 계약·청약철회 및 대금결제·재화공급 기록 5년, 소비자 불만·분쟁처리 기록 3년 보관</td></tr></table>동의를 거부할 권리가 있으나, 거부 시 주문이 불가합니다.')+
+   agree('ag3','[필수] 개인정보 처리 위탁 및 제3자 제공 동의','<table><tr><th>제공받는 자</th><td>'+esc(S.courier||'택배사')+(pn?', '+esc(pn):'')+'</td></tr><tr><th>목적</th><td>상품 배송'+(pn?', 결제 처리':'')+'</td></tr><tr><th>항목</th><td>받는 분 이름, 연락처, 배송 주소'+(pn?', 결제 금액':'')+'</td></tr><tr><th>보유 기간</th><td>배송·결제 완료 후 관련 법령에 따른 기간까지</td></tr></table>동의를 거부할 권리가 있으나, 거부 시 배송이 불가합니다.')+
+   agree('ag4','[필수] 주문 상품의 상품명, 가격, 배송 정보를 확인했으며 구매에 동의합니다.','「전자상거래 등에서의 소비자보호에 관한 법률」 제8조 제2항에 따라 주문 내용을 확인합니다. 상품 수령 후 7일 이내 교환·반품(청약철회)이 가능합니다. 자세한 내용은 <a href="#/terms">이용약관</a>, <a href="#/delivery">배송·교환·반품 안내</a>, <a href="#/privacy">개인정보처리방침</a>을 확인해 주세요.')+
+  '</div></div><div class="sumbox"><div class="box"><h2>결제 금액</h2><div class="sr"><span>상품 금액</span><span>'+won(sub)+'</span></div><div class="sr"><span>배송비</span><span>'+(sf?won(sf):'무료')+'</span></div><div class="sr t"><span>총 결제 금액</span><b>'+won(tot)+'</b></div><button class="b b1" id="payBtn" type="button" style="margin-top:16px">'+won(tot)+' 결제하기</button><p style="font-size:12px;color:#8a7f73;line-height:1.7;margin:12px 0 0">판매자: '+esc(S.company||S.name||'-')+(S.bizNo?' · 사업자등록번호 '+esc(S.bizNo):'')+'<br>카드 번호 등 결제 정보는 이 사이트에 입력·저장되지 않습니다.</p></div></div></section>';
+  window.scrollTo(0,0);
+  var $i=function(i){return document.getElementById(i)};
+  $i('same').onchange=function(){if(this.checked){$i('rName').value=$i('bName').value;$i('rTel').value=$i('bTel').value}};
+  ['bName','bTel'].forEach(function(id){$i(id).addEventListener('input',function(){if($i('same').checked){$i('rName').value=$i('bName').value;$i('rTel').value=$i('bTel').value}})});
+  $i('zipBtn').onclick=function(){postcode(function(z,a){$i('rZip').value=z;$i('rAddr').value=a;$i('rAddr2').focus()})};
+  $i('rReq').onchange=function(){$i('rReq2').style.display=this.value==='__'?'':'none'};
+  var all=$i('agAll'),cs=[].slice.call(document.querySelectorAll('.agc'));all.onchange=function(){cs.forEach(function(x){x.checked=all.checked})};cs.forEach(function(x){x.onchange=function(){all.checked=cs.every(function(y){return y.checked})}});
+  [].forEach.call(document.querySelectorAll('.tg'),function(b){b.onclick=function(e){e.preventDefault();e.stopPropagation();$i('tx-'+b.getAttribute('data-t')).classList.toggle('show')}});
+  var rs=[].slice.call(document.querySelectorAll('input[name=pm]'));function pmv(){return(rs.filter(function(r){return r.checked})[0]||{}).value}function pmUpd(){rs.forEach(function(r){r.parentElement.classList.toggle('on',r.checked)});$i('depBox').style.display=pmv()==='bank'?'':'none'}rs.forEach(function(r){r.onchange=pmUpd});pmUpd();
+  $i('payBtn').onclick=function(){var g=function(i){return $i(i).value.trim()};var bn=g('bName'),bt=g('bTel'),rn=g('rName'),rt=g('rTel'),rz=g('rZip'),ra=g('rAddr'),ra2=g('rAddr2');
+   if(!bn||!bt){alert('주문자 이름과 휴대폰 번호를 입력해 주세요.');return}if(!rn||!rt||!rz||!ra||!ra2){alert('배송지 정보(받는 분, 연락처, 우편번호, 주소, 상세 주소)를 모두 입력해 주세요.');return}
+   if(!/^[0-9\-+\s]{9,}$/.test(bt)||!/^[0-9\-+\s]{9,}$/.test(rt)){alert('연락처를 확인해 주세요.');return}
+   if(!cs.every(function(x){return x.checked})){alert('필수 약관에 모두 동의해 주세요.');return}
+   var pm=pmv(),req=g('rReq')==='__'?g('rReq2'):g('rReq');var d=new Date();var no=String(d.getFullYear()).slice(2)+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2)+'-'+Math.floor(1000+Math.random()*9000);
+   var o={no:no,at:d.toISOString(),product:p.name,pid:p.id,option:c.opt||'',qty:c.qty,subtotal:sub,shipping:sf,total:tot,method:pm,methodName:(ms.filter(function(m){return m.id===pm})[0]||{}).name,buyer:bn,buyerTel:bt,email:g('bMail'),receiver:rn,receiverTel:rt,zip:rz,address:ra+' '+ra2,request:req,depositor:g('oDep')||bn,agreed:'만14세·개인정보 수집이용·위탁/제3자제공·주문확인 동의 ('+d.toLocaleString('ko-KR')+')'};
+   sset('gs-order',o);sset('gs-cart',null);if(S.orderEndpoint)submitOrder(o);go('#/done')}}
+ function orderText(o){return '[주문서] '+(S.name||'')+'\n주문번호: '+o.no+'\n상품: '+o.product+(o.option?' / '+o.option:'')+'\n수량: '+o.qty+'개\n상품금액: '+won(o.subtotal)+'\n배송비: '+(o.shipping?won(o.shipping):'무료')+'\n합계: '+won(o.total)+'\n결제수단: '+o.methodName+(o.method==='bank'?' (입금자명 '+o.depositor+')':'')+'\n\n[주문자] '+o.buyer+' / '+o.buyerTel+(o.email?' / '+o.email:'')+'\n[배송지] '+o.receiver+' / '+o.receiverTel+'\n('+o.zip+') '+o.address+'\n요청사항: '+(o.request||'없음')+'\n동의: '+o.agreed}
+ function submitOrder(o){o.sent='sending';sset('gs-order',o);var body=JSON.stringify(o);
+  function mark(s){var x=sget('gs-order');if(x&&x.no===o.no){x.sent=s;sset('gs-order',x);var el=document.getElementById('sendState');if(el)el.innerHTML=sendState(x)}}
+  fetch(S.orderEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:body}).then(function(r){if(!r.ok)throw 0;mark('ok')}).catch(function(){fetch(S.orderEndpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:body}).then(function(){mark('ok')}).catch(function(){mark('fail')})})}
+ function sendState(o){return o.sent==='ok'?'<b style="color:#2e7d55">✓ 주문이 판매자에게 자동으로 접수됐어요.</b> 아래 버튼으로 한 번 더 보내셔도 됩니다.':o.sent==='sending'?'주문을 판매자에게 전송하는 중…':o.sent==='fail'?'<b style="color:#c0392b">자동 접수에 실패했어요. 아래 버튼으로 주문서를 꼭 보내주세요.</b>':'<b>주문 접수를 위해 아래 버튼 중 하나로 주문서를 꼭 보내주세요.</b>'}
+ function copy(x,msg){var f=function(){var a=document.createElement('textarea');a.value=x;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()};var pr=(navigator.clipboard&&window.isSecureContext)?navigator.clipboard.writeText(x).catch(f):Promise.resolve(f());pr.then(function(){if(msg)alert(msg)})}
+ function done(){var o=sget('gs-order');if(!o)return home();document.title='주문 완료 | '+(S.name||'');var t=orderText(o),pay='';
+  if(o.method==='bank')pay='<p>아래 계좌로 <b>'+esc(S.depositHours||'주문 후 24시간 이내')+'</b> 입금해 주세요. 입금이 확인되면 발송해 드려요.</p><div class="acc">'+esc(S.bank)+'</div><div class="sr t"><span>입금하실 금액</span><b>'+won(o.total)+'</b></div><div class="sr"><span>입금자명</span><span>'+esc(o.depositor)+'</span></div><button class="b b4" id="cpAcc" type="button">계좌번호 복사</button>';
+  else if(o.method==='toss'){var tl=/toss\.me\//.test(S.toss)?S.toss.replace(/\/+$/,'')+'/'+o.total:S.toss;pay='<p>토스로 <b>'+won(o.total)+'</b>을 송금해 주세요.</p><a class="b b1" href="'+esc(tl)+'" target="_blank" rel="noopener">토스로 '+won(o.total)+' 송금하기</a>'}
+  else if(o.method==='kakaopay')pay='<p>카카오페이 송금 화면에서 <b>'+won(o.total)+'</b>을 입력해 송금해 주세요.</p><a class="b b3" href="'+esc(S.kakaopay)+'" target="_blank" rel="noopener">카카오페이로 송금하기</a>';
+  else if(o.method==='card')pay='<p>카드 결제 페이지에서 <b>'+won(o.total)+'</b>을 결제해 주세요. 주문번호 <b>'+esc(o.no)+'</b>를 메모란에 적어 주시면 빠르게 확인돼요.</p><a class="b b1" href="'+esc(S.cardLink)+'" target="_blank" rel="noopener">카드로 결제하기</a>';
+  else if(o.method==='store'){var sp=PS.filter(function(x){return x.id===o.pid})[0];pay='<p>스토어에서 같은 상품을 결제해 주세요.</p><a class="b b2" href="'+esc(sp&&sp.store||'#/')+'" target="_blank" rel="noopener">스토어에서 결제하기</a>'}
+  else pay='<p>주문서를 확인한 뒤 판매자가 연락처로 결제 방법을 안내해 드려요.</p>';
+  app.innerHTML='<section class="done"><div class="ok"><div class="c">✓</div><h1 style="font-family:\'Gowun Batang\',serif;margin:0">주문서가 작성됐어요</h1><p style="color:#8a7f73">주문번호 <b>'+esc(o.no)+'</b></p></div>'+
+  '<div class="box"><div class="step"><i>1</i>주문서 보내기</div><p id="sendState" style="font-size:14px;line-height:1.7">'+sendState(o)+'</p>'+(S.phone?'<button class="b b1" id="sSms" type="button">문자로 주문서 보내기</button>':'')+(S.kakao?'<button class="b b3" id="sKakao" type="button">카카오톡으로 보내기</button>':'')+(S.email?'<button class="b b4" id="sMail" type="button">이메일로 보내기</button>':'')+'<button class="b b4" id="sCopy" type="button">주문 내용 복사</button></div>'+
+  '<div class="box"><div class="step"><i>2</i>결제하기 · '+esc(o.methodName)+'</div>'+pay+'</div>'+
+  '<div class="box"><div class="step"><i>3</i>배송 안내</div><div class="sr"><span>배송지</span><span style="text-align:right">'+esc(o.receiver)+' · '+esc(o.receiverTel)+'<br>('+esc(o.zip)+') '+esc(o.address)+'</span></div><div class="sr"><span>출고지</span><span style="text-align:right">'+esc(S.shipFrom||'-')+'</span></div><div class="sr"><span>택배사</span><span>'+esc(S.courier||'택배')+'</span></div><div class="sr"><span>출고</span><span style="text-align:right">'+esc(S.shipDays||'결제 확인 후 1~3 영업일 이내')+'</span></div></div>'+
+  '<div class="box" style="font-size:13.5px;line-height:1.8;color:#5f564c;white-space:pre-line">'+esc(t)+'</div><a class="b b4" href="#/">쇼핑 계속하기</a></section>';
+  window.scrollTo(0,0);var e;
+  if(e=document.getElementById('sSms'))e.onclick=function(){location.href='sms:'+S.phone.replace(/[^0-9+]/g,'')+'?&body='+encodeURIComponent(t)};
+  if(e=document.getElementById('sKakao'))e.onclick=function(){copy(t,'주문 내용이 복사됐어요. 카카오톡 대화창에 붙여넣기 해 주세요.');window.open(S.kakao,'_blank')};
+  if(e=document.getElementById('sMail'))e.onclick=function(){location.href='mailto:'+S.email+'?subject='+encodeURIComponent('[주문] '+o.no+' '+o.product)+'&body='+encodeURIComponent(t)};
+  document.getElementById('sCopy').onclick=function(){copy(t,'주문 내용이 복사됐어요.')};
+  if(e=document.getElementById('cpAcc'))e.onclick=function(){copy(S.bank,'계좌번호가 복사됐어요.')}}
+ function doc(title,html){document.title=title+' | '+(S.name||'');app.innerHTML='<article class="doc"><h1>'+title+'</h1>'+html+'</article>';window.scrollTo(0,0)}
+ function delivery(){doc('배송 · 교환 · 반품 안내','<h3>배송 정보</h3><table><tr><th>택배사</th><td>'+esc(S.courier||'택배')+'</td></tr><tr><th>배송비</th><td>'+feeText()+'</td></tr><tr><th>도서·산간</th><td>'+esc(S.extraFee||'지역에 따라 추가 배송비가 발생할 수 있습니다.')+'</td></tr><tr><th>출고 안내</th><td>'+esc(S.shipDays||'결제 확인 후 1~3 영업일 이내 출고 (주말·공휴일 제외)')+'</td></tr><tr><th>출고지</th><td>'+esc(S.shipFrom||'-')+(S.shipFromTel?' / '+esc(S.shipFromTel):'')+'</td></tr></table>'+
+  '<h3>교환 · 반품</h3><table><tr><th>신청 기간</th><td>상품 수령 후 7일 이내 (표시·광고와 다르거나 계약 내용과 다른 경우 수령 후 3개월 이내, 그 사실을 안 날부터 30일 이내)</td></tr><tr><th>배송비</th><td>'+esc(S.returnFee||'단순 변심: 왕복 배송비 고객 부담 / 불량·오배송: 판매자 부담')+'</td></tr><tr><th>반품지 (보내실 곳)</th><td>'+esc(retAddr())+'</td></tr><tr><th>입고지</th><td>'+esc(inbound())+'</td></tr><tr><th>신청 방법</th><td>'+esc([S.phone,S.kakao?'카카오톡 채널':'',S.email].filter(Boolean).join(' · ')||'고객센터')+'로 주문번호와 사유를 알려주신 뒤, 반품지로 상품을 보내 주세요.</td></tr><tr><th>교환·반품 불가</th><td>착용 흔적이 있거나 상품·포장이 훼손된 경우, 각인 등 주문 제작 상품(사전 고지·동의 시), 위생상 귀걸이 침이 사용된 경우, 시간이 지나 재판매가 곤란할 정도로 가치가 떨어진 경우</td></tr><tr><th>환불</th><td>반품 상품이 입고지에 도착해 확인된 날부터 3영업일 이내 환불해 드립니다.</td></tr></table>')}
+ function privacy(){var co=esc(S.company||S.name||'회사'),pn=payNames();doc('개인정보처리방침','<p>'+co+'(이하 “회사”)는 「개인정보 보호법」 등 관련 법령을 준수하며 이용자의 개인정보를 소중히 보호합니다.</p>'+
+  '<h3>1. 수집하는 개인정보 항목 및 수집 방법</h3><p>· 필수: 주문자 이름·휴대폰 번호, 받는 분 이름·연락처·배송 주소<br>· 선택: 이메일, 입금자명, 배송 요청사항<br>· 수집 방법: 주문서 작성 시 이용자가 직접 입력</p>'+
+  '<h3>2. 개인정보의 이용 목적</h3><p>주문 접수 및 확인, 대금 결제 확인, 상품 배송, 교환·반품·환불 처리, 고객 문의 응대</p>'+
+  '<h3>3. 보유 및 이용 기간</h3><p>개인정보는 이용 목적이 달성되면 지체 없이 파기합니다. 다만 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 다음 정보는 정해진 기간 동안 보관합니다.<br>· 계약 또는 청약철회 등에 관한 기록: 5년<br>· 대금결제 및 재화 등의 공급에 관한 기록: 5년<br>· 소비자의 불만 또는 분쟁처리에 관한 기록: 3년</p>'+
+  '<h3>4. 개인정보의 파기 절차 및 방법</h3><p>보유 기간이 끝난 개인정보는 지체 없이 파기합니다. 전자 파일은 복구할 수 없는 방법으로 삭제하고, 종이 문서는 분쇄하거나 소각합니다.</p>'+
+  '<h3>5. 개인정보 처리 위탁 및 제3자 제공</h3><table><tr><th>받는 자</th><th>목적</th><th>항목</th></tr><tr><td>'+esc(S.courier||'택배사')+'</td><td>상품 배송</td><td>받는 분 이름, 연락처, 배송 주소</td></tr>'+(pn?'<tr><td>'+esc(pn)+'</td><td>결제 처리</td><td>결제 금액 등 결제에 필요한 정보</td></tr>':'')+'</table><p>위 경우 외에는 이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.</p>'+
+  '<h3>6. 이용자의 권리와 행사 방법</h3><p>이용자는 언제든지 자신의 개인정보 열람, 정정, 삭제, 처리정지를 요청할 수 있으며, 아래 개인정보 보호책임자에게 연락하시면 지체 없이 조치하겠습니다.</p>'+
+  '<h3>7. 개인정보의 안전성 확보 조치</h3><p>개인정보를 다루는 인원을 최소화하고, 주문 정보를 보관하는 기기와 계정에 비밀번호 등 보안 조치를 적용합니다.</p>'+
+  '<h3>8. 개인정보 보호책임자</h3><p>· 성명: '+esc(S.privacyOfficer||S.ceo||'-')+'<br>· 연락처: '+esc([S.phone,S.email].filter(Boolean).join(' / ')||'-')+'</p>'+
+  '<h3>9. 권익침해 구제 방법</h3><p>개인정보침해신고센터 (privacy.kisa.or.kr / 국번없이 118)<br>개인정보분쟁조정위원회 (www.kopico.go.kr / 1833-6972)<br>대검찰청 (국번없이 1301) · 경찰청 (국번없이 182)</p>'+
+  '<h3>10. 시행일</h3><p>이 개인정보처리방침은 '+esc(D.date)+'부터 적용됩니다.</p>')}
+ function terms(){var co=esc(S.company||S.name||'회사');doc('이용약관','<h3>제1조 (목적)</h3><p>이 약관은 '+co+'(이하 “회사”)가 운영하는 '+esc(S.name||'쇼핑몰')+'에서 제공하는 상품 판매 서비스의 이용 조건과 절차, 회사와 이용자의 권리·의무를 정합니다.</p>'+
+  '<h3>제2조 (주문과 계약의 성립)</h3><p>이용자가 주문서를 작성해 제출하고 회사가 이를 확인하면 계약이 성립합니다. 재고 부족 등으로 주문을 승낙할 수 없는 경우 회사는 지체 없이 알리고, 이미 받은 대금은 3영업일 이내에 환급합니다.</p>'+
+  '<h3>제3조 (결제)</h3><p>결제는 쇼핑몰이 안내하는 방법(무통장입금, 송금, 카드 결제 링크 등)으로 합니다. 무통장입금은 '+esc(S.depositHours||'주문 후 24시간')+' 안에 입금되지 않으면 주문이 취소될 수 있습니다.</p>'+
+  '<h3>제4조 (배송)</h3><p>'+esc(S.shipDays||'결제 확인 후 1~3 영업일 이내 출고합니다.')+' 배송비는 '+feeText()+'이며, 도서·산간 지역은 추가 배송비가 발생할 수 있습니다. 출고지: '+esc(S.shipFrom||'-')+'</p>'+
+  '<h3>제5조 (청약철회 등)</h3><p>이용자는 상품을 받은 날부터 7일 이내에 청약철회(교환·반품)를 할 수 있습니다. 상품이 표시·광고 내용과 다르거나 계약 내용과 다르게 이행된 경우에는 받은 날부터 3개월 이내, 그 사실을 안 날부터 30일 이내에 청약철회를 할 수 있습니다. 반품지: '+esc(retAddr())+'</p>'+
+  '<h3>제6조 (청약철회의 제한)</h3><p>이용자의 책임으로 상품이 멸실·훼손된 경우, 사용으로 상품 가치가 현저히 감소한 경우, 주문 제작(각인 등) 상품으로 사전에 고지하고 동의를 받은 경우에는 청약철회가 제한될 수 있습니다.</p>'+
+  '<h3>제7조 (환급)</h3><p>회사는 반품 상품이 입고지('+esc(inbound())+')에 도착한 날부터 3영업일 이내에 대금을 환급합니다. 단순 변심에 의한 반품 배송비는 이용자가, 상품 하자나 오배송의 경우 회사가 부담합니다.</p>'+
+  '<h3>제8조 (개인정보 보호)</h3><p>회사는 <a href="#/privacy" style="text-decoration:underline">개인정보처리방침</a>에 따라 이용자의 개인정보를 보호합니다.</p>'+
+  '<h3>제9조 (분쟁 해결)</h3><p>회사는 이용자의 불만과 피해 구제 요청을 성실히 처리하며, 분쟁은 소비자분쟁해결기준 및 관련 법령에 따릅니다. 이용자는 한국소비자원(1372) 등에 피해 구제를 신청할 수 있습니다.</p>'+
+  '<h3>부칙</h3><p>이 약관은 '+esc(D.date)+'부터 적용됩니다.</p>')}
+ function route(h){h=h||location.hash||'#/';cur=h;var m=h.match(/^#\/p\/(.+)$/);if(m){var id=decodeURIComponent(m[1]);var p=PS.filter(function(x){return x.id===id})[0];return p?product(p):home()}
+  if(h==='#/checkout')return checkout();if(h==='#/done')return done();if(h==='#/privacy')return privacy();if(h==='#/terms')return terms();if(h==='#/delivery')return delivery();home()}
+ window.addEventListener('hashchange',function(){route()});route()}
+
+/* ───────── 시작 ───────── */
+fillModelSelects();fillThemes();authUI();updateButtons();restoreAuth();
+(async()=>{try{const id=localStorage.getItem(LAST_KEY);if(id&&await loadProduct(id)){$('#fileInfo').textContent='지난 작업을 불러왔어요: '+(P.name||'이름 없는 상품');if(P.ai){$('#progress').classList.remove('show')}}}catch(e){}})();
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>

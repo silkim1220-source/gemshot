@@ -1,0 +1,23 @@
+{
+ "name": "젬샷 스튜디오",
+ "short_name": "젬샷",
+ "description": "주얼리 사진 한 장으로 상세페이지와 판매 사이트까지",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f7f3ec",
+ "theme_color": "#1f1b16",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
